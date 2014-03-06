@@ -140,7 +140,7 @@ int white = 1;
         if (((penguin.position.y + spriteHeight) > (portalHeight1 + portalSize)) || ((penguin.position.y - spriteHeight) < portalHeight1)) {
             collisionHappened = true;
         } else if (!(currentTouch == bluePortal)) {
-            //collisionHappened = true;
+            collisionHappened = true;
         }
     }
 
@@ -148,10 +148,9 @@ int white = 1;
         if (((penguin.position.y + spriteHeight) > (portalHeight2 + portalSize)) || ((penguin.position.y - spriteHeight) < portalHeight2)) {
             collisionHappened = true;
         } else if (!(currentTouch == pinkPortal)) {
-            //collisionHappened = true;
+            collisionHappened = true;
         }
     }
-    
     
     
     if (collisionHappened) {
