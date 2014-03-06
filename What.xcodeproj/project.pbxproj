@@ -7,16 +7,38 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		BA2A52CE18C80FE500B4430C /* explo2.wav in Resources */ = {isa = PBXBuildFile; fileRef = BA2A52CB18C80FE500B4430C /* explo2.wav */; };
-		BA2A52CF18C80FE500B4430C /* waitingpenguin-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = BA2A52CC18C80FE500B4430C /* waitingpenguin-hd.png */; };
-		BA2A52D018C80FE500B4430C /* waitingpenguin.png in Resources */ = {isa = PBXBuildFile; fileRef = BA2A52CD18C80FE500B4430C /* waitingpenguin.png */; };
-		BA2A52D318C8103700B4430C /* GameLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BA2A52D218C8103700B4430C /* GameLayer.m */; };
-		DC21B88B1511078F00FD4891 /* fps_images-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = DC21B8881511078F00FD4891 /* fps_images-hd.png */; };
-		DC21B88C1511078F00FD4891 /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = DC21B8891511078F00FD4891 /* fps_images-ipadhd.png */; };
-		DC21B88D1511078F00FD4891 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = DC21B88A1511078F00FD4891 /* fps_images.png */; };
-		DC21B88F1511079900FD4891 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = DC21B88E1511079900FD4891 /* fps_images.png */; };
-		DC27219F160CADFF00D88944 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DC27219E160CADFF00D88944 /* Default-568h@2x.png */; };
-		DC2721A8160CAFA600D88944 /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = DC2721A7160CAFA600D88944 /* iTunesArtwork */; };
+		BAC23F1018C8310F00CA9807 /* BuildSettings-Debug-iOS.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = BAC23EE418C8310F00CA9807 /* BuildSettings-Debug-iOS.xcconfig */; };
+		BAC23F1118C8310F00CA9807 /* BuildSettings-Debug-Mac.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = BAC23EE518C8310F00CA9807 /* BuildSettings-Debug-Mac.xcconfig */; };
+		BAC23F1218C8310F00CA9807 /* BuildSettings-iOS.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = BAC23EE618C8310F00CA9807 /* BuildSettings-iOS.xcconfig */; };
+		BAC23F1318C8310F00CA9807 /* BuildSettings-Mac.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = BAC23EE718C8310F00CA9807 /* BuildSettings-Mac.xcconfig */; };
+		BAC23F1418C8310F00CA9807 /* BuildSettings-Release-iOS.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = BAC23EE818C8310F00CA9807 /* BuildSettings-Release-iOS.xcconfig */; };
+		BAC23F1518C8310F00CA9807 /* BuildSettings-Release-Mac.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = BAC23EE918C8310F00CA9807 /* BuildSettings-Release-Mac.xcconfig */; };
+		BAC23F1618C8310F00CA9807 /* explo2.wav in Resources */ = {isa = PBXBuildFile; fileRef = BAC23EEA18C8310F00CA9807 /* explo2.wav */; };
+		BAC23F1718C8310F00CA9807 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BAC23EED18C8310F00CA9807 /* AppDelegate.m */; };
+		BAC23F1818C8310F00CA9807 /* GameLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = BAC23EEF18C8310F00CA9807 /* GameLayer.m */; };
+		BAC23F1918C8310F00CA9807 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BAC23EF018C8310F00CA9807 /* main.m */; };
+		BAC23F1A18C8310F00CA9807 /* config.lua in Resources */ = {isa = PBXBuildFile; fileRef = BAC23EF418C8310F00CA9807 /* config.lua */; };
+		BAC23F1B18C8310F00CA9807 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BAC23EF718C8310F00CA9807 /* Default-568h@2x.png */; };
+		BAC23F1C18C8310F00CA9807 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = BAC23EF818C8310F00CA9807 /* Default.png */; };
+		BAC23F1D18C8310F00CA9807 /* fps_images-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = BAC23EF918C8310F00CA9807 /* fps_images-hd.png */; };
+		BAC23F1E18C8310F00CA9807 /* fps_images-ipadhd.png in Resources */ = {isa = PBXBuildFile; fileRef = BAC23EFA18C8310F00CA9807 /* fps_images-ipadhd.png */; };
+		BAC23F1F18C8310F00CA9807 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = BAC23EFB18C8310F00CA9807 /* fps_images.png */; };
+		BAC23F2018C8310F00CA9807 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = BAC23EFC18C8310F00CA9807 /* Icon-72.png */; };
+		BAC23F2118C8310F00CA9807 /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = BAC23EFD18C8310F00CA9807 /* Icon-Small-50.png */; };
+		BAC23F2218C8310F00CA9807 /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = BAC23EFE18C8310F00CA9807 /* Icon-Small.png */; };
+		BAC23F2318C8310F00CA9807 /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BAC23EFF18C8310F00CA9807 /* Icon-Small@2x.png */; };
+		BAC23F2418C8310F00CA9807 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = BAC23F0018C8310F00CA9807 /* Icon.png */; };
+		BAC23F2518C8310F00CA9807 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BAC23F0118C8310F00CA9807 /* Icon@2x.png */; };
+		BAC23F2618C8310F00CA9807 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BAC23F0218C8310F00CA9807 /* Info.plist */; };
+		BAC23F2718C8310F00CA9807 /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = BAC23F0318C8310F00CA9807 /* iTunesArtwork */; };
+		BAC23F2818C8310F00CA9807 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BAC23F0618C8310F00CA9807 /* InfoPlist.strings */; };
+		BAC23F2918C8310F00CA9807 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = BAC23F0818C8310F00CA9807 /* MainMenu.xib */; };
+		BAC23F2A18C8310F00CA9807 /* fps_images.png in Resources */ = {isa = PBXBuildFile; fileRef = BAC23F0A18C8310F00CA9807 /* fps_images.png */; };
+		BAC23F2B18C8310F00CA9807 /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = BAC23F0B18C8310F00CA9807 /* icon.icns */; };
+		BAC23F2C18C8310F00CA9807 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BAC23F0C18C8310F00CA9807 /* Info.plist */; };
+		BAC23F2D18C8310F00CA9807 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = BAC23F0D18C8310F00CA9807 /* README.md */; };
+		BAC23F2E18C8310F00CA9807 /* waitingpenguin-hd.png in Resources */ = {isa = PBXBuildFile; fileRef = BAC23F0E18C8310F00CA9807 /* waitingpenguin-hd.png */; };
+		BAC23F2F18C8310F00CA9807 /* waitingpenguin.png in Resources */ = {isa = PBXBuildFile; fileRef = BAC23F0F18C8310F00CA9807 /* waitingpenguin.png */; };
 		DC485B1113AA0E5600F2BC70 /* libchipmunk-mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DC485B0D13AA0E5600F2BC70 /* libchipmunk-mac.a */; };
 		DC485B1713AA0EBB00F2BC70 /* libbox2d-mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DC485B1613AA0EBB00F2BC70 /* libbox2d-mac.a */; };
 		DC485B4613AA18A600F2BC70 /* libcocosdenshion-mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DC485B4513AA18A600F2BC70 /* libcocosdenshion-mac.a */; };
@@ -32,39 +54,49 @@
 		DC65616613A969B600A7AC53 /* libsneakyinput-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DC65615A13A969B600A7AC53 /* libsneakyinput-ios.a */; };
 		DC979E3E13B35F8800656CB9 /* libcocos2d-extensions-mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DC979E3D13B35F8800656CB9 /* libcocos2d-extensions-mac.a */; };
 		DC979E5A13B3607E00656CB9 /* libchipmunk-spacemanager-mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DC979E5913B3607E00656CB9 /* libchipmunk-spacemanager-mac.a */; };
-		DCC1A0FA13A94ED5005BD75D /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = DCC1A0F913A94ED5005BD75D /* Default.png */; };
-		DCC1A0FE13A94ED5005BD75D /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = DCC1A0FD13A94ED5005BD75D /* Icon-72.png */; };
-		DCC1A10013A94ED5005BD75D /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = DCC1A0FF13A94ED5005BD75D /* Icon-Small-50.png */; };
-		DCC1A10213A94ED5005BD75D /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = DCC1A10113A94ED5005BD75D /* Icon-Small.png */; };
-		DCC1A10413A94ED5005BD75D /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DCC1A10313A94ED5005BD75D /* Icon-Small@2x.png */; };
-		DCC1A10613A94ED5005BD75D /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = DCC1A10513A94ED5005BD75D /* Icon.png */; };
-		DCC1A10813A94ED5005BD75D /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DCC1A10713A94ED5005BD75D /* Icon@2x.png */; };
-		DCC1A26913A94EE6005BD75D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = DCC1A26713A94EE6005BD75D /* InfoPlist.strings */; };
-		DCC1A26C13A94EE6005BD75D /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = DCC1A26A13A94EE6005BD75D /* MainMenu.xib */; };
-		DCC1A27013A94EE6005BD75D /* icon.icns in Resources */ = {isa = PBXBuildFile; fileRef = DCC1A26F13A94EE6005BD75D /* icon.icns */; };
-		DCC1A3A913A94F1A005BD75D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DCC1A38E13A94F1A005BD75D /* AppDelegate.m */; };
-		DCC1A3AA13A94F1A005BD75D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DCC1A38E13A94F1A005BD75D /* AppDelegate.m */; };
-		DCC1A3AD13A94F1A005BD75D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DCC1A39113A94F1A005BD75D /* main.m */; };
-		DCC1A3AE13A94F1A005BD75D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DCC1A39113A94F1A005BD75D /* main.m */; };
-		DCC1A3AF13A94F1A005BD75D /* config.lua in Resources */ = {isa = PBXBuildFile; fileRef = DCC1A39513A94F1A005BD75D /* config.lua */; };
-		DCC1A3B013A94F1A005BD75D /* config.lua in Resources */ = {isa = PBXBuildFile; fileRef = DCC1A39513A94F1A005BD75D /* config.lua */; };
 		DCF95CD213A97EC500AE3B80 /* libcocos2d-mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DCF95CC913A97EC500AE3B80 /* libcocos2d-mac.a */; };
 		DCF95CD413A97EC500AE3B80 /* libkobold2d-mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DCF95CCB13A97EC500AE3B80 /* libkobold2d-mac.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		BA2A52CB18C80FE500B4430C /* explo2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = explo2.wav; path = ../../explo2.wav; sourceTree = "<group>"; };
-		BA2A52CC18C80FE500B4430C /* waitingpenguin-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "waitingpenguin-hd.png"; path = "../../waitingpenguin-hd.png"; sourceTree = "<group>"; };
-		BA2A52CD18C80FE500B4430C /* waitingpenguin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = waitingpenguin.png; path = ../../waitingpenguin.png; sourceTree = "<group>"; };
-		BA2A52D118C8103700B4430C /* GameLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameLayer.h; sourceTree = "<group>"; };
-		BA2A52D218C8103700B4430C /* GameLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameLayer.m; sourceTree = "<group>"; };
-		DC21B8881511078F00FD4891 /* fps_images-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fps_images-hd.png"; sourceTree = "<group>"; };
-		DC21B8891511078F00FD4891 /* fps_images-ipadhd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fps_images-ipadhd.png"; sourceTree = "<group>"; };
-		DC21B88A1511078F00FD4891 /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fps_images.png; sourceTree = "<group>"; };
-		DC21B88E1511079900FD4891 /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fps_images.png; path = Resources/fps_images.png; sourceTree = "<group>"; };
-		DC27219E160CADFF00D88944 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		DC2721A7160CAFA600D88944 /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = file; path = iTunesArtwork; sourceTree = "<group>"; };
-		DC3BE97813B4FB71003739CC /* BuildSettings-iOS.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "BuildSettings-iOS.xcconfig"; sourceTree = "<group>"; };
+		BAC23EE418C8310F00CA9807 /* BuildSettings-Debug-iOS.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "BuildSettings-Debug-iOS.xcconfig"; sourceTree = "<group>"; };
+		BAC23EE518C8310F00CA9807 /* BuildSettings-Debug-Mac.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "BuildSettings-Debug-Mac.xcconfig"; sourceTree = "<group>"; };
+		BAC23EE618C8310F00CA9807 /* BuildSettings-iOS.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "BuildSettings-iOS.xcconfig"; sourceTree = "<group>"; };
+		BAC23EE718C8310F00CA9807 /* BuildSettings-Mac.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "BuildSettings-Mac.xcconfig"; sourceTree = "<group>"; };
+		BAC23EE818C8310F00CA9807 /* BuildSettings-Release-iOS.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "BuildSettings-Release-iOS.xcconfig"; sourceTree = "<group>"; };
+		BAC23EE918C8310F00CA9807 /* BuildSettings-Release-Mac.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "BuildSettings-Release-Mac.xcconfig"; sourceTree = "<group>"; };
+		BAC23EEA18C8310F00CA9807 /* explo2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = explo2.wav; path = ../../explo2.wav; sourceTree = "<group>"; };
+		BAC23EEC18C8310F00CA9807 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		BAC23EED18C8310F00CA9807 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		BAC23EEE18C8310F00CA9807 /* GameLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GameLayer.h; sourceTree = "<group>"; };
+		BAC23EEF18C8310F00CA9807 /* GameLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GameLayer.m; sourceTree = "<group>"; };
+		BAC23EF018C8310F00CA9807 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		BAC23EF118C8310F00CA9807 /* Prefix-iOS.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Prefix-iOS.pch"; sourceTree = "<group>"; };
+		BAC23EF218C8310F00CA9807 /* Prefix-Mac.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Prefix-Mac.pch"; sourceTree = "<group>"; };
+		BAC23EF418C8310F00CA9807 /* config.lua */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = config.lua; sourceTree = "<group>"; };
+		BAC23EF718C8310F00CA9807 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		BAC23EF818C8310F00CA9807 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		BAC23EF918C8310F00CA9807 /* fps_images-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fps_images-hd.png"; sourceTree = "<group>"; };
+		BAC23EFA18C8310F00CA9807 /* fps_images-ipadhd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fps_images-ipadhd.png"; sourceTree = "<group>"; };
+		BAC23EFB18C8310F00CA9807 /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fps_images.png; sourceTree = "<group>"; };
+		BAC23EFC18C8310F00CA9807 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
+		BAC23EFD18C8310F00CA9807 /* Icon-Small-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-50.png"; sourceTree = "<group>"; };
+		BAC23EFE18C8310F00CA9807 /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small.png"; sourceTree = "<group>"; };
+		BAC23EFF18C8310F00CA9807 /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@2x.png"; sourceTree = "<group>"; };
+		BAC23F0018C8310F00CA9807 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		BAC23F0118C8310F00CA9807 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		BAC23F0218C8310F00CA9807 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BAC23F0318C8310F00CA9807 /* iTunesArtwork */ = {isa = PBXFileReference; lastKnownFileType = file; path = iTunesArtwork; sourceTree = "<group>"; };
+		BAC23F0718C8310F00CA9807 /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		BAC23F0918C8310F00CA9807 /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		BAC23F0A18C8310F00CA9807 /* fps_images.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fps_images.png; sourceTree = "<group>"; };
+		BAC23F0B18C8310F00CA9807 /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = icon.icns; sourceTree = "<group>"; };
+		BAC23F0C18C8310F00CA9807 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BAC23F0D18C8310F00CA9807 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		BAC23F0E18C8310F00CA9807 /* waitingpenguin-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "waitingpenguin-hd.png"; path = "../../waitingpenguin-hd.png"; sourceTree = "<group>"; };
+		BAC23F0F18C8310F00CA9807 /* waitingpenguin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = waitingpenguin.png; path = ../../waitingpenguin.png; sourceTree = "<group>"; };
+		BAC23F3018C8314100CA9807 /* .app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = .app; path = "/Users/jorriebrettin/Kobold2D/Kobold2D-2.1.0/What/build/Debug/.app"; sourceTree = "<absolute>"; };
+		BAC23F3118C8314100CA9807 /* .app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = .app; path = "/Users/jorriebrettin/Kobold2D/Kobold2D-2.1.0/What/build/Debug/.app"; sourceTree = "<absolute>"; };
 		DC485B0D13AA0E5600F2BC70 /* libchipmunk-mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libchipmunk-mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC485B1613AA0EBB00F2BC70 /* libbox2d-mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libbox2d-mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC485B4513AA18A600F2BC70 /* libcocosdenshion-mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libcocosdenshion-mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -80,33 +112,8 @@
 		DC65615A13A969B600A7AC53 /* libsneakyinput-ios.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libsneakyinput-ios.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC979E3D13B35F8800656CB9 /* libcocos2d-extensions-mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libcocos2d-extensions-mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC979E5913B3607E00656CB9 /* libchipmunk-spacemanager-mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libchipmunk-spacemanager-mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		DC9C33E713B5024400931BF2 /* BuildSettings-Debug-Mac.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "BuildSettings-Debug-Mac.xcconfig"; sourceTree = "<group>"; };
-		DC9C33E813B5024400931BF2 /* BuildSettings-Mac.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "BuildSettings-Mac.xcconfig"; sourceTree = "<group>"; };
-		DC9C33E913B5024400931BF2 /* BuildSettings-Release-Mac.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "BuildSettings-Release-Mac.xcconfig"; sourceTree = "<group>"; };
-		DCC1A0E313A94ED5005BD75D /* .app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = .app; sourceTree = BUILT_PRODUCTS_DIR; };
-		DCC1A0F913A94ED5005BD75D /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
-		DCC1A0FD13A94ED5005BD75D /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
-		DCC1A0FF13A94ED5005BD75D /* Icon-Small-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-50.png"; sourceTree = "<group>"; };
-		DCC1A10113A94ED5005BD75D /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small.png"; sourceTree = "<group>"; };
-		DCC1A10313A94ED5005BD75D /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@2x.png"; sourceTree = "<group>"; };
-		DCC1A10513A94ED5005BD75D /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
-		DCC1A10713A94ED5005BD75D /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
-		DCC1A10913A94ED5005BD75D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		DCC1A25A13A94EE6005BD75D /* .app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = .app; sourceTree = BUILT_PRODUCTS_DIR; };
-		DCC1A26813A94EE6005BD75D /* English */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = English; path = Resources/English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		DCC1A26B13A94EE6005BD75D /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = Resources/English.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		DCC1A26F13A94EE6005BD75D /* icon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = icon.icns; path = Resources/icon.icns; sourceTree = "<group>"; };
-		DCC1A27113A94EE6005BD75D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = "<group>"; };
-		DCC1A38D13A94F1A005BD75D /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		DCC1A38E13A94F1A005BD75D /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		DCC1A39113A94F1A005BD75D /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		DCC1A39213A94F1A005BD75D /* Prefix-iOS.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Prefix-iOS.pch"; sourceTree = "<group>"; };
-		DCC1A39313A94F1A005BD75D /* Prefix-Mac.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Prefix-Mac.pch"; sourceTree = "<group>"; };
-		DCC1A39513A94F1A005BD75D /* config.lua */ = {isa = PBXFileReference; explicitFileType = sourcecode.applescript; fileEncoding = 4; path = config.lua; sourceTree = "<group>"; };
 		DCF95CC913A97EC500AE3B80 /* libcocos2d-mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libcocos2d-mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCF95CCB13A97EC500AE3B80 /* libkobold2d-mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libkobold2d-mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		DCFA90EF13B4F6F7009DD35A /* BuildSettings-Debug-iOS.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "BuildSettings-Debug-iOS.xcconfig"; sourceTree = "<group>"; };
-		DCFA90F013B4F811009DD35A /* BuildSettings-Release-iOS.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "BuildSettings-Release-iOS.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,135 +151,102 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		DCC1A0D613A94EC0005BD75D = {
+		BAC23EE318C8310F00CA9807 /* BuildSettings */ = {
 			isa = PBXGroup;
 			children = (
-				DCC1A38C13A94F1A005BD75D /* Projectfiles */,
-				DCC1A0F713A94ED5005BD75D /* Projectfiles-iOS */,
-				DCC1A26413A94EE6005BD75D /* Projectfiles-Mac */,
-				DCFA90ED13B4F6A0009DD35A /* BuildSettings */,
-				DCC1A0E613A94ED5005BD75D /* Frameworks */,
-				DCC1A0E413A94ED5005BD75D /* Products */,
+				BAC23EE418C8310F00CA9807 /* BuildSettings-Debug-iOS.xcconfig */,
+				BAC23EE518C8310F00CA9807 /* BuildSettings-Debug-Mac.xcconfig */,
+				BAC23EE618C8310F00CA9807 /* BuildSettings-iOS.xcconfig */,
+				BAC23EE718C8310F00CA9807 /* BuildSettings-Mac.xcconfig */,
+				BAC23EE818C8310F00CA9807 /* BuildSettings-Release-iOS.xcconfig */,
+				BAC23EE918C8310F00CA9807 /* BuildSettings-Release-Mac.xcconfig */,
 			);
+			path = BuildSettings;
 			sourceTree = "<group>";
 		};
-		DCC1A0E413A94ED5005BD75D /* Products */ = {
+		BAC23EEB18C8310F00CA9807 /* Projectfiles */ = {
 			isa = PBXGroup;
 			children = (
-				DCC1A0E313A94ED5005BD75D /* .app */,
-				DCC1A25A13A94EE6005BD75D /* .app */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		DCC1A0E613A94ED5005BD75D /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		DCC1A0F713A94ED5005BD75D /* Projectfiles-iOS */ = {
-			isa = PBXGroup;
-			children = (
-				DCC1A0F813A94ED5005BD75D /* Resources */,
-			);
-			path = "Projectfiles-iOS";
-			sourceTree = "<group>";
-		};
-		DCC1A0F813A94ED5005BD75D /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				DC2721A7160CAFA600D88944 /* iTunesArtwork */,
-				DC21B88A1511078F00FD4891 /* fps_images.png */,
-				DC21B8881511078F00FD4891 /* fps_images-hd.png */,
-				DC21B8891511078F00FD4891 /* fps_images-ipadhd.png */,
-				DCC1A0F913A94ED5005BD75D /* Default.png */,
-				DC27219E160CADFF00D88944 /* Default-568h@2x.png */,
-				DCC1A0FD13A94ED5005BD75D /* Icon-72.png */,
-				DCC1A0FF13A94ED5005BD75D /* Icon-Small-50.png */,
-				DCC1A10113A94ED5005BD75D /* Icon-Small.png */,
-				DCC1A10313A94ED5005BD75D /* Icon-Small@2x.png */,
-				DCC1A10513A94ED5005BD75D /* Icon.png */,
-				DCC1A10713A94ED5005BD75D /* Icon@2x.png */,
-				DCC1A10913A94ED5005BD75D /* Info.plist */,
-			);
-			path = Resources;
-			sourceTree = "<group>";
-		};
-		DCC1A26413A94EE6005BD75D /* Projectfiles-Mac */ = {
-			isa = PBXGroup;
-			children = (
-				DCC1A26513A94EE6005BD75D /* Resources */,
-			);
-			path = "Projectfiles-Mac";
-			sourceTree = "<group>";
-		};
-		DCC1A26513A94EE6005BD75D /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				DC21B88E1511079900FD4891 /* fps_images.png */,
-				DCC1A26F13A94EE6005BD75D /* icon.icns */,
-				DCC1A27113A94EE6005BD75D /* Info.plist */,
-				DCC1A26613A94EE6005BD75D /* English.lproj */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-		};
-		DCC1A26613A94EE6005BD75D /* English.lproj */ = {
-			isa = PBXGroup;
-			children = (
-				DCC1A26713A94EE6005BD75D /* InfoPlist.strings */,
-				DCC1A26A13A94EE6005BD75D /* MainMenu.xib */,
-			);
-			name = English.lproj;
-			sourceTree = "<group>";
-		};
-		DCC1A38C13A94F1A005BD75D /* Projectfiles */ = {
-			isa = PBXGroup;
-			children = (
-				BA2A52D118C8103700B4430C /* GameLayer.h */,
-				BA2A52D218C8103700B4430C /* GameLayer.m */,
-				DCC1A38D13A94F1A005BD75D /* AppDelegate.h */,
-				DCC1A38E13A94F1A005BD75D /* AppDelegate.m */,
-				DCC1A39413A94F1A005BD75D /* Resources */,
-				DCC1A3CF13A94F2C005BD75D /* Supporting Files */,
+				BAC23EEC18C8310F00CA9807 /* AppDelegate.h */,
+				BAC23EED18C8310F00CA9807 /* AppDelegate.m */,
+				BAC23EEE18C8310F00CA9807 /* GameLayer.h */,
+				BAC23EEF18C8310F00CA9807 /* GameLayer.m */,
+				BAC23EF018C8310F00CA9807 /* main.m */,
+				BAC23EF118C8310F00CA9807 /* Prefix-iOS.pch */,
+				BAC23EF218C8310F00CA9807 /* Prefix-Mac.pch */,
+				BAC23EF318C8310F00CA9807 /* Resources */,
 			);
 			path = Projectfiles;
 			sourceTree = "<group>";
 		};
-		DCC1A39413A94F1A005BD75D /* Resources */ = {
+		BAC23EF318C8310F00CA9807 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				BA2A52CB18C80FE500B4430C /* explo2.wav */,
-				BA2A52CC18C80FE500B4430C /* waitingpenguin-hd.png */,
-				BA2A52CD18C80FE500B4430C /* waitingpenguin.png */,
-				DCC1A39513A94F1A005BD75D /* config.lua */,
+				BAC23EEA18C8310F00CA9807 /* explo2.wav */,
+				BAC23F0E18C8310F00CA9807 /* waitingpenguin-hd.png */,
+				BAC23F0F18C8310F00CA9807 /* waitingpenguin.png */,
+				BAC23EF418C8310F00CA9807 /* config.lua */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		DCC1A3CF13A94F2C005BD75D /* Supporting Files */ = {
+		BAC23EF518C8310F00CA9807 /* Projectfiles-iOS */ = {
 			isa = PBXGroup;
 			children = (
-				DCC1A39113A94F1A005BD75D /* main.m */,
-				DCC1A39213A94F1A005BD75D /* Prefix-iOS.pch */,
-				DCC1A39313A94F1A005BD75D /* Prefix-Mac.pch */,
+				BAC23EF618C8310F00CA9807 /* Resources */,
 			);
-			name = "Supporting Files";
+			path = "Projectfiles-iOS";
 			sourceTree = "<group>";
 		};
-		DCFA90ED13B4F6A0009DD35A /* BuildSettings */ = {
+		BAC23EF618C8310F00CA9807 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				DCFA90EF13B4F6F7009DD35A /* BuildSettings-Debug-iOS.xcconfig */,
-				DCFA90F013B4F811009DD35A /* BuildSettings-Release-iOS.xcconfig */,
-				DC3BE97813B4FB71003739CC /* BuildSettings-iOS.xcconfig */,
-				DC9C33E713B5024400931BF2 /* BuildSettings-Debug-Mac.xcconfig */,
-				DC9C33E913B5024400931BF2 /* BuildSettings-Release-Mac.xcconfig */,
-				DC9C33E813B5024400931BF2 /* BuildSettings-Mac.xcconfig */,
+				BAC23EF718C8310F00CA9807 /* Default-568h@2x.png */,
+				BAC23EF818C8310F00CA9807 /* Default.png */,
+				BAC23EF918C8310F00CA9807 /* fps_images-hd.png */,
+				BAC23EFA18C8310F00CA9807 /* fps_images-ipadhd.png */,
+				BAC23EFB18C8310F00CA9807 /* fps_images.png */,
+				BAC23EFC18C8310F00CA9807 /* Icon-72.png */,
+				BAC23EFD18C8310F00CA9807 /* Icon-Small-50.png */,
+				BAC23EFE18C8310F00CA9807 /* Icon-Small.png */,
+				BAC23EFF18C8310F00CA9807 /* Icon-Small@2x.png */,
+				BAC23F0018C8310F00CA9807 /* Icon.png */,
+				BAC23F0118C8310F00CA9807 /* Icon@2x.png */,
+				BAC23F0218C8310F00CA9807 /* Info.plist */,
+				BAC23F0318C8310F00CA9807 /* iTunesArtwork */,
 			);
-			path = BuildSettings;
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		BAC23F0418C8310F00CA9807 /* Projectfiles-Mac */ = {
+			isa = PBXGroup;
+			children = (
+				BAC23F0518C8310F00CA9807 /* Resources */,
+			);
+			path = "Projectfiles-Mac";
+			sourceTree = "<group>";
+		};
+		BAC23F0518C8310F00CA9807 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				BAC23F0618C8310F00CA9807 /* InfoPlist.strings */,
+				BAC23F0818C8310F00CA9807 /* MainMenu.xib */,
+				BAC23F0A18C8310F00CA9807 /* fps_images.png */,
+				BAC23F0B18C8310F00CA9807 /* icon.icns */,
+				BAC23F0C18C8310F00CA9807 /* Info.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		DCC1A0D613A94EC0005BD75D = {
+			isa = PBXGroup;
+			children = (
+				BAC23EEB18C8310F00CA9807 /* Projectfiles */,
+				BAC23EF518C8310F00CA9807 /* Projectfiles-iOS */,
+				BAC23F0418C8310F00CA9807 /* Projectfiles-Mac */,
+				BAC23F0D18C8310F00CA9807 /* README.md */,
+				BAC23EE318C8310F00CA9807 /* BuildSettings */,
+			);
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -292,7 +266,7 @@
 			);
 			name = "What-iOS";
 			productName = "Hello-World-iOS";
-			productReference = DCC1A0E313A94ED5005BD75D /* .app */;
+			productReference = BAC23F3018C8314100CA9807 /* .app */;
 			productType = "com.apple.product-type.application";
 		};
 		DCC1A25913A94EE6005BD75D /* What-Mac */ = {
@@ -309,7 +283,7 @@
 			);
 			name = "What-Mac";
 			productName = "Hello-World-Mac";
-			productReference = DCC1A25A13A94EE6005BD75D /* .app */;
+			productReference = BAC23F3118C8314100CA9807 /* .app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -329,7 +303,7 @@
 				English,
 			);
 			mainGroup = DCC1A0D613A94EC0005BD75D;
-			productRefGroup = DCC1A0E413A94ED5005BD75D /* Products */;
+			productRefGroup = DCC1A0D613A94EC0005BD75D;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -344,22 +318,35 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DCC1A0FA13A94ED5005BD75D /* Default.png in Resources */,
-				DCC1A0FE13A94ED5005BD75D /* Icon-72.png in Resources */,
-				DCC1A10013A94ED5005BD75D /* Icon-Small-50.png in Resources */,
-				DCC1A10213A94ED5005BD75D /* Icon-Small.png in Resources */,
-				DCC1A10413A94ED5005BD75D /* Icon-Small@2x.png in Resources */,
-				DCC1A10613A94ED5005BD75D /* Icon.png in Resources */,
-				DCC1A10813A94ED5005BD75D /* Icon@2x.png in Resources */,
-				DCC1A3AF13A94F1A005BD75D /* config.lua in Resources */,
-				DC21B88B1511078F00FD4891 /* fps_images-hd.png in Resources */,
-				DC21B88C1511078F00FD4891 /* fps_images-ipadhd.png in Resources */,
-				BA2A52CF18C80FE500B4430C /* waitingpenguin-hd.png in Resources */,
-				DC21B88D1511078F00FD4891 /* fps_images.png in Resources */,
-				DC27219F160CADFF00D88944 /* Default-568h@2x.png in Resources */,
-				BA2A52CE18C80FE500B4430C /* explo2.wav in Resources */,
-				BA2A52D018C80FE500B4430C /* waitingpenguin.png in Resources */,
-				DC2721A8160CAFA600D88944 /* iTunesArtwork in Resources */,
+				BAC23F2418C8310F00CA9807 /* Icon.png in Resources */,
+				BAC23F2218C8310F00CA9807 /* Icon-Small.png in Resources */,
+				BAC23F1A18C8310F00CA9807 /* config.lua in Resources */,
+				BAC23F1F18C8310F00CA9807 /* fps_images.png in Resources */,
+				BAC23F1E18C8310F00CA9807 /* fps_images-ipadhd.png in Resources */,
+				BAC23F2B18C8310F00CA9807 /* icon.icns in Resources */,
+				BAC23F2318C8310F00CA9807 /* Icon-Small@2x.png in Resources */,
+				BAC23F1318C8310F00CA9807 /* BuildSettings-Mac.xcconfig in Resources */,
+				BAC23F1B18C8310F00CA9807 /* Default-568h@2x.png in Resources */,
+				BAC23F2618C8310F00CA9807 /* Info.plist in Resources */,
+				BAC23F2E18C8310F00CA9807 /* waitingpenguin-hd.png in Resources */,
+				BAC23F2818C8310F00CA9807 /* InfoPlist.strings in Resources */,
+				BAC23F2018C8310F00CA9807 /* Icon-72.png in Resources */,
+				BAC23F2C18C8310F00CA9807 /* Info.plist in Resources */,
+				BAC23F2918C8310F00CA9807 /* MainMenu.xib in Resources */,
+				BAC23F1D18C8310F00CA9807 /* fps_images-hd.png in Resources */,
+				BAC23F2D18C8310F00CA9807 /* README.md in Resources */,
+				BAC23F2F18C8310F00CA9807 /* waitingpenguin.png in Resources */,
+				BAC23F1218C8310F00CA9807 /* BuildSettings-iOS.xcconfig in Resources */,
+				BAC23F1518C8310F00CA9807 /* BuildSettings-Release-Mac.xcconfig in Resources */,
+				BAC23F1118C8310F00CA9807 /* BuildSettings-Debug-Mac.xcconfig in Resources */,
+				BAC23F1018C8310F00CA9807 /* BuildSettings-Debug-iOS.xcconfig in Resources */,
+				BAC23F1618C8310F00CA9807 /* explo2.wav in Resources */,
+				BAC23F2718C8310F00CA9807 /* iTunesArtwork in Resources */,
+				BAC23F2518C8310F00CA9807 /* Icon@2x.png in Resources */,
+				BAC23F2118C8310F00CA9807 /* Icon-Small-50.png in Resources */,
+				BAC23F1418C8310F00CA9807 /* BuildSettings-Release-iOS.xcconfig in Resources */,
+				BAC23F1C18C8310F00CA9807 /* Default.png in Resources */,
+				BAC23F2A18C8310F00CA9807 /* fps_images.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -367,11 +354,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DCC1A26913A94EE6005BD75D /* InfoPlist.strings in Resources */,
-				DCC1A26C13A94EE6005BD75D /* MainMenu.xib in Resources */,
-				DCC1A27013A94EE6005BD75D /* icon.icns in Resources */,
-				DCC1A3B013A94F1A005BD75D /* config.lua in Resources */,
-				DC21B88F1511079900FD4891 /* fps_images.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -382,9 +364,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DCC1A3A913A94F1A005BD75D /* AppDelegate.m in Sources */,
-				BA2A52D318C8103700B4430C /* GameLayer.m in Sources */,
-				DCC1A3AD13A94F1A005BD75D /* main.m in Sources */,
+				BAC23F1718C8310F00CA9807 /* AppDelegate.m in Sources */,
+				BAC23F1918C8310F00CA9807 /* main.m in Sources */,
+				BAC23F1818C8310F00CA9807 /* GameLayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -392,26 +374,24 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DCC1A3AA13A94F1A005BD75D /* AppDelegate.m in Sources */,
-				DCC1A3AE13A94F1A005BD75D /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		DCC1A26713A94EE6005BD75D /* InfoPlist.strings */ = {
+		BAC23F0618C8310F00CA9807 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				DCC1A26813A94EE6005BD75D /* English */,
+				BAC23F0718C8310F00CA9807 /* English */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		DCC1A26A13A94EE6005BD75D /* MainMenu.xib */ = {
+		BAC23F0818C8310F00CA9807 /* MainMenu.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				DCC1A26B13A94EE6005BD75D /* English */,
+				BAC23F0918C8310F00CA9807 /* English */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";
@@ -433,28 +413,24 @@
 		};
 		DCC1A25413A94ED7005BD75D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DCFA90EF13B4F6F7009DD35A /* BuildSettings-Debug-iOS.xcconfig */;
 			buildSettings = {
 			};
 			name = Debug;
 		};
 		DCC1A25513A94ED7005BD75D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DCFA90F013B4F811009DD35A /* BuildSettings-Release-iOS.xcconfig */;
 			buildSettings = {
 			};
 			name = Release;
 		};
 		DCC1A38A13A94EE7005BD75D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DC9C33E713B5024400931BF2 /* BuildSettings-Debug-Mac.xcconfig */;
 			buildSettings = {
 			};
 			name = Debug;
 		};
 		DCC1A38B13A94EE7005BD75D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DC9C33E913B5024400931BF2 /* BuildSettings-Release-Mac.xcconfig */;
 			buildSettings = {
 			};
 			name = Release;
