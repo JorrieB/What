@@ -11,27 +11,27 @@
 
 NSMutableArray* buttonColors;
 NSMutableArray* randomizationArray; //randomization array is a reshuffled ordered array. This is used to color the buttons
-NSMutableArray* orderedArray;
-NSArray *purpleA,*redA,*blueA,*fadedBlueA,*greenA;
-NSInteger* temp;
+NSMutableArray* orderedArray; //holds the button colors
+NSArray *purpleA,*redA,*blueA,*fadedBlueA,*greenA; //each array is a color
+NSInteger* temp; //temporarily holds values for button randomization purposes
 NSNumber* tester;
-int temp1, temp2, temp3, temp4, temp5;
-int done = 0;
-int done1 = 240;
+int temp1, temp2, temp3, temp4, temp5; //these are the button randomization variables
+int done = 0; //this keeps track of where the first portal strip is
+int done1 = 240; //this keeps track of where the second portal strip is
 int WINDOW_WIDTH;
 int WINDOW_HEIGHT;
-int portalHeight1;
-int portalHeight2;
-int portalSize;
-int spriteHeight = 15;
+int portalHeight1; //portal1.position.y
+int portalHeight2; //portal2.position.y
+int portalSize; //how tall the portal is
+int spriteHeight = 15; //estimate on sprite size for collision detection
 int spriteWidth = 43;
 bool collisionHappened = false;
-int score = 0;
+int score = 0; //unimplemented score counter
 float red = 1.0, blue = 1.0, green = 1.0, alpha = 1.0;
-float bb0, bb1, bb2, bb3, bb4, gb0, gb1, gb2, gb3, gb4, rb0, rb1, rb2, rb3, rb4, ab0, ab1, ab2, ab3, ab4;
-int pinkPortal, bluePortal, currentTouch;
+float bb0, bb1, bb2, bb3, bb4, gb0, gb1, gb2, gb3, gb4, rb0, rb1, rb2, rb3, rb4, ab0, ab1, ab2, ab3, ab4;//randomization variables for the button colors
+int pinkPortal, bluePortal, currentTouch; //keeps track of whether the background is properly set or not
 int portalSpeed = 2;
-int white = 1;
+int white = 1; //flips the portal strips from white to black; if (white == 1) stripcolor = white;
 
 
 
