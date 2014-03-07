@@ -59,6 +59,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BA6E566918C92590003CBB34 /* .app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = .app; path = "/Users/jorriebrettin/Kobold2D/Kobold2D-2.1.0/What/build/Debug/.app"; sourceTree = "<absolute>"; };
+		BA6E566A18C92590003CBB34 /* .app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = .app; path = "/Users/jorriebrettin/Kobold2D/Kobold2D-2.1.0/What/build/Debug/.app"; sourceTree = "<absolute>"; };
 		BAC23EE418C8310F00CA9807 /* BuildSettings-Debug-iOS.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "BuildSettings-Debug-iOS.xcconfig"; sourceTree = "<group>"; };
 		BAC23EE518C8310F00CA9807 /* BuildSettings-Debug-Mac.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "BuildSettings-Debug-Mac.xcconfig"; sourceTree = "<group>"; };
 		BAC23EE618C8310F00CA9807 /* BuildSettings-iOS.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "BuildSettings-iOS.xcconfig"; sourceTree = "<group>"; };
@@ -95,8 +97,6 @@
 		BAC23F0D18C8310F00CA9807 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		BAC23F0E18C8310F00CA9807 /* waitingpenguin-hd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "waitingpenguin-hd.png"; path = "../../waitingpenguin-hd.png"; sourceTree = "<group>"; };
 		BAC23F0F18C8310F00CA9807 /* waitingpenguin.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = waitingpenguin.png; path = ../../waitingpenguin.png; sourceTree = "<group>"; };
-		BAC23F3018C8314100CA9807 /* .app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = .app; path = "/Users/jorriebrettin/Kobold2D/Kobold2D-2.1.0/What/build/Debug/.app"; sourceTree = "<absolute>"; };
-		BAC23F3118C8314100CA9807 /* .app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = .app; path = "/Users/jorriebrettin/Kobold2D/Kobold2D-2.1.0/What/build/Debug/.app"; sourceTree = "<absolute>"; };
 		DC485B0D13AA0E5600F2BC70 /* libchipmunk-mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libchipmunk-mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC485B1613AA0EBB00F2BC70 /* libbox2d-mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libbox2d-mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		DC485B4513AA18A600F2BC70 /* libcocosdenshion-mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; path = "libcocosdenshion-mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -266,7 +266,7 @@
 			);
 			name = "What-iOS";
 			productName = "Hello-World-iOS";
-			productReference = BAC23F3018C8314100CA9807 /* .app */;
+			productReference = BA6E566918C92590003CBB34 /* .app */;
 			productType = "com.apple.product-type.application";
 		};
 		DCC1A25913A94EE6005BD75D /* What-Mac */ = {
@@ -283,7 +283,7 @@
 			);
 			name = "What-Mac";
 			productName = "Hello-World-Mac";
-			productReference = BAC23F3118C8314100CA9807 /* .app */;
+			productReference = BA6E566A18C92590003CBB34 /* .app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
