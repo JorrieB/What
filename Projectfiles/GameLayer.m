@@ -16,8 +16,8 @@ NSArray *purpleA,*redA,*blueA,*fadedBlueA,*greenA; //each array is a color
 NSInteger* temp; //temporarily holds values for button randomization purposes
 NSNumber* tester;
 int temp1, temp2, temp3, temp4, temp5; //these are the button randomization variables
-int done = 0; //this keeps track of where the first portal strip is
-int done1 = 240; //this keeps track of where the second portal strip is
+int portalPosition1 = 0; //this keeps track of where the first portal strip is
+int portalPosition2 = 240; //this keeps track of where the second portal strip is
 int WINDOW_WIDTH;
 int WINDOW_HEIGHT;
 int portalHeight1; //portal1.position.y
@@ -32,6 +32,15 @@ float bb0, bb1, bb2, bb3, bb4, gb0, gb1, gb2, gb3, gb4, rb0, rb1, rb2, rb3, rb4,
 int pinkPortal, bluePortal, currentTouch; //keeps track of whether the background is properly set or not
 int portalSpeed = 2;
 int white = 1; //flips the portal strips from white to black; if (white == 1) stripcolor = white;
+float static triFrontRef = 0, triTopRef = 3*M_PI/4, triBottomRef = 5*M_PI/4; //variables that we will base the tilt of the triangle on
+CGPoint* triFontVert, triTopVert, triBottomVert; //the actual vertex values
+CGPoint* triCenter;
+int triCentX,triCentY;
+float scaleFactor;
+int globalPosMov;
+int radius = 27;
+
+
 
 
 
@@ -51,44 +60,54 @@ int white = 1; //flips the portal strips from white to black; if (white == 1) st
 {
     KKInput* input = [KKInput sharedInput];
     CGPoint posMove = [input locationOfAnyTouchInPhase:KKTouchPhaseStationary];
+    globalPosMov = posMove.x;
+    //CGPoint triCenter = CGPointMake(triCentX, triCentY);
+    
+    scaleFactor = .01*(posMove.y - triCentY); //scaling factor
+    triCentY = triCentY + .15*(posMove.y - triCentY);
     
     if (posMove.x < WINDOW_WIDTH/6) {
     //moves the penguin if you touch the screen in the appropriate place
         if (posMove.x != 0 && posMove.y != 0) {
-            penguin.position = CGPointMake(penguin.position.x, penguin.position.y + .1*(-penguin.position.y+posMove.y));
+            
+//            CGPoint triFontVert = CGPointMake(triCentX + 30*cos(triFrontRef + scaleFactor), triCentY + 30*sin(triFrontRef + scaleFactor));
+//            CGPoint triTopVert = CGPointMake(triCentX + 30*cos(triTopRef + scaleFactor), triCentY + 30*sin(triTopRef + scaleFactor));
+//            CGPoint triBottomVert = CGPointMake(triCentX + 30*cos(triBottomRef + scaleFactor), triCentY + 30*sin(triBottomRef + scaleFactor));
+//            CGPoint vertices2[] = {triFontVert, triTopVert,triBottomVert};
+            
+            //penguin.position = CGPointMake(penguin.position.x, penguin.position.y + .1*(-penguin.position.y+posMove.y));
             //glClearColor(0.f, 1.0f, 1.0f, 1.0f);
         }
     }
     else if (posMove.x > WINDOW_WIDTH*5/6){
         [self backgroundSwitch:posMove];
     }
-    
-    
+
     //The strips that move across the screen are defined here.
-    if (done < 0) {
-        done = WINDOW_WIDTH;
+    if (portalPosition1 < 0) {
+        portalPosition1 = WINDOW_WIDTH;
         portalHeight1 = arc4random() % (WINDOW_HEIGHT - portalSize);
     }
     //first if will be run on the collision event. it will give the player enough time to reorient
-    if (done > WINDOW_WIDTH) {
-        done = done - portalSpeed;
+    if (portalPosition1 > WINDOW_WIDTH) {
+        portalPosition1 = portalPosition1 - portalSpeed;
     } else {
-        done = ((done - portalSpeed) % WINDOW_WIDTH);
+        portalPosition1 = ((portalPosition1 - portalSpeed) % WINDOW_WIDTH);
     }
     
-    if (done1 < 0) {
-        done1 = WINDOW_WIDTH;
+    if (portalPosition2 < 0) {
+        portalPosition2 = WINDOW_WIDTH;
         portalHeight2 = arc4random() % (WINDOW_HEIGHT - portalSize);
     }
     //first if will be run on the collision event. it will give the player enough time to reorient
-    if (done1 > WINDOW_WIDTH) {
-        done1 = done1 - portalSpeed;
+    if (portalPosition2 > WINDOW_WIDTH) {
+        portalPosition2 = portalPosition2 - portalSpeed;
         
     } else {
-        done1 = ((done1 - portalSpeed) % WINDOW_WIDTH);
+        portalPosition2 = ((portalPosition2 - portalSpeed) % WINDOW_WIDTH);
     }
     
-    if (penguin.position.x == done || penguin.position.x == done1){
+    if (penguin.position.x == portalPosition1 || penguin.position.x == portalPosition2){
         red = (rand() % 10) * .1;
         blue = (rand() % 10) * .1;
         green = (rand() % 10) * .1;
@@ -136,7 +155,7 @@ int white = 1; //flips the portal strips from white to black; if (white == 1) st
 -(void) collisionDetection
 {
     
-    if ((penguin.position.x+spriteWidth > done && penguin.position.x+spriteWidth < (done+32)) || (penguin.position.x +spriteWidth > done && penguin.position.x + spriteWidth < (done+32))) {
+    if ((penguin.position.x+spriteWidth > portalPosition1 && penguin.position.x+spriteWidth < (portalPosition1+32)) || (penguin.position.x +spriteWidth > portalPosition1 && penguin.position.x + spriteWidth < (portalPosition1+32))) {
         if (((penguin.position.y + spriteHeight) > (portalHeight1 + portalSize)) || ((penguin.position.y - spriteHeight) < portalHeight1)) {
             collisionHappened = true;
         } else if (!(currentTouch == bluePortal)) {
@@ -144,7 +163,7 @@ int white = 1; //flips the portal strips from white to black; if (white == 1) st
         }
     }
 
-    if ((penguin.position.x+spriteWidth > done1 && penguin.position.x+spriteWidth < (done1+32)) || (penguin.position.x +spriteWidth > done1 && penguin.position.x + spriteWidth < (done1+32))) {
+    if ((penguin.position.x+spriteWidth > portalPosition2 && penguin.position.x+spriteWidth < (portalPosition2+32)) || (penguin.position.x +spriteWidth > portalPosition2 && penguin.position.x + spriteWidth < (portalPosition2+32))) {
         if (((penguin.position.y + spriteHeight) > (portalHeight2 + portalSize)) || ((penguin.position.y - spriteHeight) < portalHeight2)) {
             collisionHappened = true;
         } else if (!(currentTouch == pinkPortal)) {
@@ -160,8 +179,8 @@ int white = 1; //flips the portal strips from white to black; if (white == 1) st
 
 -(void) collision
 {
-    done = WINDOW_WIDTH * 1.5;
-    done1 = WINDOW_WIDTH * 2;
+    portalPosition1 = WINDOW_WIDTH * 1.5;
+    portalPosition2 = WINDOW_WIDTH * 2;
     portalHeight1 = rand() % (WINDOW_HEIGHT - portalSize);
     portalHeight2 = rand() % (WINDOW_HEIGHT - portalSize);
     collisionHappened = false;
@@ -175,6 +194,7 @@ int white = 1; //flips the portal strips from white to black; if (white == 1) st
 -(id) init //this is where you initialize all the objects in the screen; labels, sprites, etc.
 {
     if ((self = [super init])) {
+        
         
         CCLabelTTF* jorrie = [CCLabelTTF labelWithString:@"JorrieB" fontName:@"AppleGothic" fontSize:48];
         jorrie.color = ccCYAN;
@@ -193,7 +213,10 @@ int white = 1; //flips the portal strips from white to black; if (white == 1) st
         WINDOW_WIDTH = screenSize.width;
         portalSize = WINDOW_HEIGHT/5;
         float imageHeight = penguin.texture.contentSize.height;
-        penguin.position = CGPointMake(screenSize.width / 6, imageHeight / 2);
+        penguin.position = CGPointMake(screenSize.width / 6, imageHeight / 2);\
+        
+        triCentX = WINDOW_WIDTH/6; // setting initial points
+        triCentY = WINDOW_HEIGHT/2;
        
         [self buttonRecolor];
         [self scheduleUpdate];
@@ -302,29 +325,50 @@ int white = 1; //flips the portal strips from white to black; if (white == 1) st
 
 -(void) draw
 {
-    glClearColor(red, blue, green, alpha);
-    
-    ccDrawSolidRect(ccp(done-32, 0), ccp(done, WINDOW_HEIGHT), ccc4f(white, white, white, 1));
-    ccDrawSolidRect(ccp(done-32, portalHeight1), ccp(done, portalHeight1+portalSize), ccc4f(0, 1, 1, 1.0));
-    ccDrawSolidRect(ccp(done1-32, 0), ccp(done1, WINDOW_HEIGHT), ccc4f(white, white, white, 1));
-    ccDrawSolidRect(ccp(done1-32, portalHeight2), ccp(done1, portalHeight2+portalSize), ccc4f(1, 0, 1, 1.0));
+//    glClearColor(red, blue, green, alpha);
+//    
+//    ccDrawSolidRect(ccp(portalPosition1-32, 0), ccp(portalPosition1, WINDOW_HEIGHT), ccc4f(white, white, white, 1));
+//    ccDrawSolidRect(ccp(portalPosition1-32, portalHeight1), ccp(portalPosition1, portalHeight1+portalSize), ccc4f(0, 1, 1, 1.0));
+//    ccDrawSolidRect(ccp(portalPosition2-32, 0), ccp(portalPosition2, WINDOW_HEIGHT), ccc4f(white, white, white, 1));
+//    ccDrawSolidRect(ccp(portalPosition2-32, portalHeight2), ccp(portalPosition2, portalHeight2+portalSize), ccc4f(1, 0, 1, 1.0));
 
-    CGSize screenSize = [CCDirector sharedDirector].winSize;
-    ccColor4F rectColorPurple = ccc4f(rb0, gb0, bb0, ab0); //parameters correspond to red, green, blue, and alpha (transparancy)
-    ccDrawSolidRect(ccp( screenSize.width*5/6, screenSize.height*.8), ccp(screenSize.width, screenSize.height), rectColorPurple);
     
-    ccColor4F rectColorRed = ccc4f(rb1, gb1, bb1, ab1); //parameters correspond to red, green, blue, and alpha (transparancy)
-    ccDrawSolidRect(ccp( screenSize.width*5/6, screenSize.height*.6), ccp(screenSize.width, screenSize.height*.8), rectColorRed);
+    if (globalPosMov != 0) {
+        CGPoint triFontVert = CGPointMake(triCentX + radius*cos(triFrontRef + scaleFactor), triCentY + radius*sin(triFrontRef + scaleFactor));
+        CGPoint triTopVert = CGPointMake(triCentX + radius*cos(triTopRef + scaleFactor), triCentY + radius*sin(triTopRef + scaleFactor));
+        CGPoint triBottomVert = CGPointMake(triCentX + radius*cos(triBottomRef + scaleFactor), triCentY + radius*sin(triBottomRef + scaleFactor));
+        CGPoint vertices2[] = {triFontVert, triTopVert,triBottomVert};
+        ccDrawSolidPoly(vertices2, 3, ccc4f(0, 1, 1, 1));
+    } else {
+        CGPoint triFontVert = CGPointMake(triCentX + radius*cos(triFrontRef + scaleFactor), triCentY + radius*sin(triFrontRef + scaleFactor));
+        CGPoint triTopVert = CGPointMake(triCentX + radius*cos(triTopRef + scaleFactor), triCentY + radius*sin(triTopRef + scaleFactor));
+        CGPoint triBottomVert = CGPointMake(triCentX + radius*cos(triBottomRef + scaleFactor), triCentY + radius*sin(triBottomRef + scaleFactor));
+        CGPoint vertices2[] = {triFontVert, triTopVert,triBottomVert};
+        ccDrawSolidPoly(vertices2, 3, ccc4f(0, 1, 1, 1));
+    }
     
-    ccColor4F rectColorBlue = ccc4f(rb2, gb2, bb2, ab2); //parameters correspond to red, green, blue, and alpha (transparancy)
-    ccDrawSolidRect(ccp( screenSize.width*5/6, screenSize.height*.4), ccp(screenSize.width, screenSize.height*.6), rectColorBlue);
     
-    ccColor4F rectColorYellow = ccc4f(rb3, gb3, bb3, ab3); //parameters correspond to red, green, blue, and alpha (transparancy)
-    ccDrawSolidRect(ccp( screenSize.width*5/6, screenSize.height*.2), ccp(screenSize.width, screenSize.height*.4), rectColorYellow);
-    
-    ccColor4F rectColorGreen = ccc4f(rb4, gb4, bb4, ab4); //parameters correspond to red, green, blue, and alpha (transparancy)
-    ccDrawSolidRect(ccp( screenSize.width*5/6, 0), ccp(screenSize.width, screenSize.height*.2), rectColorGreen);
-    
+    ccDrawColor4F(0, 1, 1, 1);
+    //CGPoint vertices2[] = {ccp(150, 120), ccp(180, 120), ccp(165, 150)};
+    //CGPoint vertices2[] = { ccp(0,0), ccp(0,screenSize.height*0.5), ccp(screenSize.width*0.5,screenSize.height*0.5), ccp(screenSize.width*0.5,0) };
+    //(vertices2, 3, true);
+//
+//    CGSize screenSize = [CCDirector sharedDirector].winSize;
+//    ccColor4F rectColorPurple = ccc4f(rb0, gb0, bb0, ab0); //parameters correspond to red, green, blue, and alpha (transparancy)
+//    ccDrawSolidRect(ccp( screenSize.width*5/6, screenSize.height*.8), ccp(screenSize.width, screenSize.height), rectColorPurple);
+//    
+//    ccColor4F rectColorRed = ccc4f(rb1, gb1, bb1, ab1); //parameters correspond to red, green, blue, and alpha (transparancy)
+//    ccDrawSolidRect(ccp( screenSize.width*5/6, screenSize.height*.6), ccp(screenSize.width, screenSize.height*.8), rectColorRed);
+//    
+//    ccColor4F rectColorBlue = ccc4f(rb2, gb2, bb2, ab2); //parameters correspond to red, green, blue, and alpha (transparancy)
+//    ccDrawSolidRect(ccp( screenSize.width*5/6, screenSize.height*.4), ccp(screenSize.width, screenSize.height*.6), rectColorBlue);
+//    
+//    ccColor4F rectColorYellow = ccc4f(rb3, gb3, bb3, ab3); //parameters correspond to red, green, blue, and alpha (transparancy)
+//    ccDrawSolidRect(ccp( screenSize.width*5/6, screenSize.height*.2), ccp(screenSize.width, screenSize.height*.4), rectColorYellow);
+//    
+//    ccColor4F rectColorGreen = ccc4f(rb4, gb4, bb4, ab4); //parameters correspond to red, green, blue, and alpha (transparancy)
+//    ccDrawSolidRect(ccp( screenSize.width*5/6, 0), ccp(screenSize.width, screenSize.height*.2), rectColorGreen);
+
     
 }
 
