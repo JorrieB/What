@@ -5,9 +5,10 @@
 //  Created by Jorrie Brettin on 2/27/14.
 //
 //
-
 #import "GameLayer.h"
 #import "SimpleAudioEngine.h"
+#import "HeyaldaGLDrawNode.h"
+
 
 NSMutableArray* buttonColors;
 NSMutableArray* randomizationArray; //randomization array is a reshuffled ordered array. This is used to color the buttons
@@ -43,6 +44,9 @@ int radius = 27;
 
 
 
+int numColors = 12;
+int stepSize;
+NSMutableArray* colors;
 
 @implementation GameLayer
 
@@ -132,22 +136,19 @@ int radius = 27;
     currentTouch = 6;
     if (posMove.y != 0)
     {
-        if (posMove.y < WINDOW_HEIGHT/5) {
-            glClearColor(rb4, gb4, bb4, ab4);
-            currentTouch = 5;
-        } else if (posMove.y < WINDOW_HEIGHT*2/5) {
-            glClearColor(rb3, gb3, bb3, ab3);
-            currentTouch = 4;
-        } else if (posMove.y < WINDOW_HEIGHT*3/5) {
-            glClearColor(rb2, gb2, bb2, ab2);
-            currentTouch = 3;
-        } else if (posMove.y < WINDOW_HEIGHT*4/5) {
-            glClearColor(rb1, gb1, bb1, ab1);
-            currentTouch = 2;
-        } else {
-            glClearColor(rb0, gb0, bb0, ab0);
-            currentTouch = 1;
+        for (int k = 0; k < numColors; ++ k) //rows
+        {
+            if (posMove.y < stepSize*k) {
+                NSArray *thiscolor = [colors objectAtIndex:k];
+                float r = [[thiscolor objectAtIndex:0] floatValue]/255;
+                float g = [[thiscolor objectAtIndex:1] floatValue]/255;
+                float b = [[thiscolor objectAtIndex:2] floatValue]/255;
+                glClearColor(r, g, b, ab4);
+                currentTouch = k;
+                break;
+            }
         }
+
     }
 }
 
@@ -219,6 +220,7 @@ int radius = 27;
         triCentY = WINDOW_HEIGHT/2;
        
         [self buttonRecolor];
+        [self createGradient];
         [self scheduleUpdate];
     }
     
@@ -323,6 +325,54 @@ int radius = 27;
     
 }
 
+-(void) createGradient
+{
+    // Create an instance of the HeyaldaGLDrawNode class and add it to this layer.
+    HeyaldaGLDrawNode* glDrawNode = [[HeyaldaGLDrawNode alloc] init];
+    [self addChild:glDrawNode];
+    
+    CGSize screenSize = [CCDirector sharedDirector].winSize;
+    
+    stepSize = screenSize.height/(numColors-1);
+    colors = [[NSMutableArray alloc] init];
+    for (int k = 0; k < numColors; ++ k) //rows
+    {
+        CGPoint thisLeftCorner = ccp(screenSize.width*5/6, stepSize*k);
+        CGPoint thisRightCorner = ccp(screenSize.width, stepSize*k);
+        float r = (arc4random() % 255);
+        float b = (arc4random() % 255);
+        float g = (arc4random() % 255);
+        NSArray* thiscolor = [NSArray arrayWithObjects:[NSNumber numberWithFloat:r],
+                              [NSNumber numberWithFloat:g],
+                              [NSNumber numberWithFloat:b], nil];
+        [colors addObject:thiscolor];
+        [glDrawNode addToDynamicVerts2D:thisLeftCorner withColor:ccc4(r,g,b, 255)];
+        [glDrawNode addToDynamicVerts2D:thisRightCorner withColor:ccc4(r,g,b, 255)];
+
+    }
+    
+    
+//    // Define the four corners of the screen
+//    CGPoint upperLeftCorner = ccp(screenSize.width*5/6, screenSize.height);
+//    CGPoint lowerLeftCorner = ccp(screenSize.width*5/6, 0);
+//    CGPoint upperRightCorner = ccp(screenSize.width, screenSize.height);
+//    CGPoint lowerRightCorner = ccp(screenSize.width,0);
+//    
+//    // Create a triangle strip with a counter-clockwise winding.
+//    [glDrawNode addToDynamicVerts2D:upperLeftCorner withColor:ccc4(0, 100, 200, 255)];
+//    [glDrawNode addToDynamicVerts2D:lowerLeftCorner withColor:ccc4(0, 200, 100, 255)];
+//    [glDrawNode addToDynamicVerts2D:upperRightCorner withColor:ccc4(0,100, 200, 255)];
+//    [glDrawNode addToDynamicVerts2D:lowerRightCorner withColor:ccc4(0,200, 100, 255)];
+    
+    // Rednudant because the defualt is kDrawTriangleStrip, but setting it here for this example.
+    glDrawNode.glDrawMode = kDrawTriangleStrip;
+    
+    // Tell the HeyaldaGLDrawNode that it is ready to draw when it's draw method is called.
+    [glDrawNode setReadyToDrawDynamicVerts:YES];
+
+}
+
+
 -(void) draw
 {
 //    glClearColor(red, blue, green, alpha);
@@ -354,21 +404,6 @@ int radius = 27;
     //(vertices2, 3, true);
 //
 //    CGSize screenSize = [CCDirector sharedDirector].winSize;
-//    ccColor4F rectColorPurple = ccc4f(rb0, gb0, bb0, ab0); //parameters correspond to red, green, blue, and alpha (transparancy)
-//    ccDrawSolidRect(ccp( screenSize.width*5/6, screenSize.height*.8), ccp(screenSize.width, screenSize.height), rectColorPurple);
-//    
-//    ccColor4F rectColorRed = ccc4f(rb1, gb1, bb1, ab1); //parameters correspond to red, green, blue, and alpha (transparancy)
-//    ccDrawSolidRect(ccp( screenSize.width*5/6, screenSize.height*.6), ccp(screenSize.width, screenSize.height*.8), rectColorRed);
-//    
-//    ccColor4F rectColorBlue = ccc4f(rb2, gb2, bb2, ab2); //parameters correspond to red, green, blue, and alpha (transparancy)
-//    ccDrawSolidRect(ccp( screenSize.width*5/6, screenSize.height*.4), ccp(screenSize.width, screenSize.height*.6), rectColorBlue);
-//    
-//    ccColor4F rectColorYellow = ccc4f(rb3, gb3, bb3, ab3); //parameters correspond to red, green, blue, and alpha (transparancy)
-//    ccDrawSolidRect(ccp( screenSize.width*5/6, screenSize.height*.2), ccp(screenSize.width, screenSize.height*.4), rectColorYellow);
-//    
-//    ccColor4F rectColorGreen = ccc4f(rb4, gb4, bb4, ab4); //parameters correspond to red, green, blue, and alpha (transparancy)
-//    ccDrawSolidRect(ccp( screenSize.width*5/6, 0), ccp(screenSize.width, screenSize.height*.2), rectColorGreen);
-
     
 }
 
