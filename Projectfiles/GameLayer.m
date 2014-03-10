@@ -39,14 +39,14 @@ CGPoint* triCenter;
 int triCentX,triCentY;
 float scaleFactor;
 int globalPosMov;
-int radius = 27;
+int radius = 20;
+float smoothTwist;
 
 
+float r,g,b;
 
-
-int numColors = 12;
+int numColors = 6;
 int stepSize;
-NSMutableArray* colors;
 
 @implementation GameLayer
 
@@ -67,23 +67,25 @@ NSMutableArray* colors;
     globalPosMov = posMove.x;
     //CGPoint triCenter = CGPointMake(triCentX, triCentY);
     
-    scaleFactor = .01*(posMove.y - triCentY); //scaling factor
-    triCentY = triCentY + .15*(posMove.y - triCentY);
     
     if (posMove.x < WINDOW_WIDTH/6) {
     //moves the penguin if you touch the screen in the appropriate place
         if (posMove.x != 0 && posMove.y != 0) {
-            
-//            CGPoint triFontVert = CGPointMake(triCentX + 30*cos(triFrontRef + scaleFactor), triCentY + 30*sin(triFrontRef + scaleFactor));
-//            CGPoint triTopVert = CGPointMake(triCentX + 30*cos(triTopRef + scaleFactor), triCentY + 30*sin(triTopRef + scaleFactor));
-//            CGPoint triBottomVert = CGPointMake(triCentX + 30*cos(triBottomRef + scaleFactor), triCentY + 30*sin(triBottomRef + scaleFactor));
-//            CGPoint vertices2[] = {triFontVert, triTopVert,triBottomVert};
-            
+            scaleFactor = .005*(posMove.y - triCentY);
+            triCentY = triCentY + .15*(posMove.y - triCentY);
+            smoothTwist = (-posMove.y + penguin.position.y)* .5;
+            penguin.position = CGPointMake(penguin.position.x, penguin.position.y + .1*(posMove.y - penguin.position.y));
+            penguin.rotation = .5*(-posMove.y + penguin.position.y) - 90;
             //penguin.position = CGPointMake(penguin.position.x, penguin.position.y + .1*(-penguin.position.y+posMove.y));
             //glClearColor(0.f, 1.0f, 1.0f, 1.0f);
+        } else {
+            scaleFactor = scaleFactor*.9;
+            penguin.rotation = smoothTwist - 90;
+            smoothTwist = smoothTwist*.8;
         }
     }
-    else if (posMove.x > WINDOW_WIDTH*5/6){
+    
+    if (posMove.x > WINDOW_WIDTH*5/6){
         [self backgroundSwitch:posMove];
     }
 
@@ -116,13 +118,7 @@ NSMutableArray* colors;
         blue = (rand() % 10) * .1;
         green = (rand() % 10) * .1;
         alpha = (rand() % 10) * .1;
-        [self buttonRecolor];
-        if (white == 0){
-            white = 1;
-        } else {
-            white = 0;
         }
-    }
     
 
     [self collisionDetection];
@@ -133,42 +129,81 @@ NSMutableArray* colors;
 
 -(void) backgroundSwitch: (CGPoint) posMove
 {
-    currentTouch = 6;
-    if (posMove.y != 0)
-    {
-        for (int k = 0; k < numColors; ++ k) //rows
-        {
-            if (posMove.y < stepSize*k) {
-                NSArray *thiscolor = [colors objectAtIndex:k];
-                float r = [[thiscolor objectAtIndex:0] floatValue]/255;
-                float g = [[thiscolor objectAtIndex:1] floatValue]/255;
-                float b = [[thiscolor objectAtIndex:2] floatValue]/255;
-                glClearColor(r, g, b, ab4);
-                currentTouch = k;
+    //currentTouch = 6;
+//    if (posMove.y != 0)
+//    {
+//        for (int k = 0; k < numColors; ++ k) //rows
+//        {
+//            if (posMove.y < stepSize*k) {
+//                NSArray *thiscolor = [colors objectAtIndex:k];
+//                r = [[thiscolor objectAtIndex:0] floatValue]/255;
+//                g = [[thiscolor objectAtIndex:1] floatValue]/255;
+//                b = [[thiscolor objectAtIndex:2] floatValue]/255;
+//                glClearColor(r, g, b, ab4);
+//                
+//                //glClearColor(1, 1, 1, 1);
+//                currentTouch = k;
+//                break;
+//            }
+//        }
+//
+//    }
+    
+    if (posMove.y != 0) {
+        for (int i = 0; i < 6; i++){
+            if (posMove.y < WINDOW_HEIGHT * (i+1) / 6) {
+                [self shipSwitch: i];
                 break;
             }
         }
-
     }
+}
+
+-(void) shipSwitch: (int) shipColor
+{
+//    purpleTri = [CCSprite spriteWithFile:@"purpleTri.png"];
+//    blueTri = [CCSprite spriteWithFile:@"blueTri.png"];
+//    orangeTri = [CCSprite spriteWithFile:@"orangeTri.png"];
+//    yellowTri = [CCSprite spriteWithFile:@"yellowTri.png"];
+//    pinkTri = [CCSprite spriteWithFile:@"pinkTri.png"];
+//    greenTri = [CCSprite spriteWithFile:@"greenTri.png"];
+//    
+//    NSArray *colorObjects = @[purpleTri,blueTri,orangeTri,yellowTri,pinkTri,greenTri];
+//    
+//    for (CCSprite* triangle in colorObjects) {
+//        triangle.scale = triangle.scale*.18;
+//        triangle.position = CGPointMake(WINDOW_WIDTH / 6, WINDOW_HEIGHT / 2);
+//        triangle.rotation = -90;
+//    }
+//    
+//    for (int i = 0; i < 6; i++) {
+//        [self addChild:[colorObjects objectAtIndex:i]];
+//    }
+//    
+    for (CCSprite* ship in colorObjects) {
+        ship.visible = false;
+    }
+    CCSprite* temp = [colorObjects objectAtIndex:shipColor];
+    temp.visible = true;
 }
 
 // detect for collisions and run collision if one occurs
 -(void) collisionDetection
 {
     
-    if ((penguin.position.x+spriteWidth > portalPosition1 && penguin.position.x+spriteWidth < (portalPosition1+32)) || (penguin.position.x +spriteWidth > portalPosition1 && penguin.position.x + spriteWidth < (portalPosition1+32))) {
-        if (((penguin.position.y + spriteHeight) > (portalHeight1 + portalSize)) || ((penguin.position.y - spriteHeight) < portalHeight1)) {
+    if ((triCentX+spriteWidth > portalPosition1 && triCentX+spriteWidth < (portalPosition1+32)) || (triCentX +spriteWidth > portalPosition1 && triCentX + spriteWidth < (portalPosition1+32))) {
+        if (((triCentY + spriteHeight) > (portalHeight1 + portalSize)) || ((triCentY - spriteHeight) < portalHeight1)) {
             collisionHappened = true;
         } else if (!(currentTouch == bluePortal)) {
-            collisionHappened = true;
+            //collisionHappened = true;
         }
     }
 
-    if ((penguin.position.x+spriteWidth > portalPosition2 && penguin.position.x+spriteWidth < (portalPosition2+32)) || (penguin.position.x +spriteWidth > portalPosition2 && penguin.position.x + spriteWidth < (portalPosition2+32))) {
-        if (((penguin.position.y + spriteHeight) > (portalHeight2 + portalSize)) || ((penguin.position.y - spriteHeight) < portalHeight2)) {
+    if ((triCentX+spriteWidth > portalPosition2 && triCentX+spriteWidth < (portalPosition2+32)) || (triCentX +spriteWidth > portalPosition2 && triCentX + spriteWidth < (portalPosition2+32))) {
+        if (((triCentY + spriteHeight) > (portalHeight2 + portalSize)) || ((triCentY - spriteHeight) < portalHeight2)) {
             collisionHappened = true;
         } else if (!(currentTouch == pinkPortal)) {
-            collisionHappened = true;
+            //collisionHappened = true;
         }
     }
     
@@ -186,7 +221,7 @@ NSMutableArray* colors;
     portalHeight2 = rand() % (WINDOW_HEIGHT - portalSize);
     collisionHappened = false;
     score = 0;
-    [[SimpleAudioEngine sharedEngine] playEffect:@"explo2.wav"];
+    //[[SimpleAudioEngine sharedEngine] playEffect:@"explo2.wav"];
     
 }
 
@@ -196,6 +231,7 @@ NSMutableArray* colors;
 {
     if ((self = [super init])) {
         
+        //NSArray *colors = @[ccc4f(1, 0, 1, 1),ccc4f(1, 0, 0, 1),ccc4f(0, 0, 1, 1)];
         
         CCLabelTTF* jorrie = [CCLabelTTF labelWithString:@"JorrieB" fontName:@"AppleGothic" fontSize:48];
         jorrie.color = ccCYAN;
@@ -204,22 +240,46 @@ NSMutableArray* colors;
         
         [[SimpleAudioEngine sharedEngine] preloadEffect:@"explo2.wav"];
         
-        glClearColor(red, blue, green, alpha);
+        //glClearColor(red, blue, green, alpha);
         
-        penguin = [CCSprite spriteWithFile:@"waitingpenguin.png"]; //cocos auto-loads -hd files on retina
-        [self addChild:penguin z:1];
+        purpleTri = [CCSprite spriteWithFile:@"purpleTri.png"];
+        blueTri = [CCSprite spriteWithFile:@"blueTri.png"];
+        orangeTri = [CCSprite spriteWithFile:@"orangeTri.png"];
+        yellowTri = [CCSprite spriteWithFile:@"yellowTri.png"];
+        pinkTri = [CCSprite spriteWithFile:@"pinkTri.png"];
+        greenTri = [CCSprite spriteWithFile:@"greenTri.png"];
+        
+        NSArray *colors = @[purpleTri,blueTri,orangeTri,yellowTri,pinkTri,greenTri];
+
+        NSMutableArray *colorObjects = [[NSMutableArray alloc] init];
+        [colorObjects addObjectsFromArray:colors];
+        //NSArray *colorObjects = @[purpleTri,blueTri,orangeTri,yellowTri,pinkTri,greenTri];
+        
+        for (int i = 0; i < 6; i++) {
+            [self addChild:[colorObjects objectAtIndex:i]];
+        }
+
+        //penguin.visible = true;
+        //penguin.position = CGPointMake(screenSize.width / 6, imageHeight / 2);
+        //penguin.scale = penguin.scale*.17;
+        //penguin.rotation = -90;
         
         CGSize screenSize = [CCDirector sharedDirector].winSize;
         WINDOW_HEIGHT = screenSize.height;
         WINDOW_WIDTH = screenSize.width;
         portalSize = WINDOW_HEIGHT/5;
-        float imageHeight = penguin.texture.contentSize.height;
-        penguin.position = CGPointMake(screenSize.width / 6, imageHeight / 2);\
+        
+        
+        for (CCSprite* triangle in colorObjects) {
+            triangle.scale = triangle.scale*.18;
+            triangle.position = CGPointMake(WINDOW_WIDTH / 6, WINDOW_HEIGHT / 2);
+            triangle.rotation = -90;
+        }
+        
         
         triCentX = WINDOW_WIDTH/6; // setting initial points
         triCentY = WINDOW_HEIGHT/2;
        
-        [self buttonRecolor];
         [self createGradient];
         [self scheduleUpdate];
     }
@@ -228,128 +288,33 @@ NSMutableArray* colors;
 }
 
 
--(void) buttonRecolor
-{
-   
-    
-    NSArray *purpleA = [NSArray arrayWithObjects:@1,@0, @1, @1, nil]; // the pink portal
-    NSArray *redA = [NSArray arrayWithObjects:@1,@0, @0, @1, nil];
-    NSArray *blueA = [NSArray arrayWithObjects:@0,@0, @1, @1, nil];
-    NSArray *fadedBlueA = [NSArray arrayWithObjects:@0,@1,@1,@1, nil]; // the blue portal
-    NSArray *greenA = [NSArray arrayWithObjects:@0,@1, @0, @1, nil];
-    NSMutableArray *orderedArray = [NSMutableArray arrayWithObjects:purpleA, redA, blueA, fadedBlueA, greenA, nil];
-    
-    temp1 = arc4random() % 5;
-    temp2 = arc4random() % 5;
-    while (temp1 == temp2) {
-        temp2 = arc4random() % 5;
-    }
-    temp3 = arc4random() % 5;
-    while (temp1 == temp3 || temp2 == temp3) {
-        temp3 = arc4random() % 5;
-    }
-    temp4 = arc4random() % 5;
-    while (temp4 == temp1 || temp4 == temp2 || temp4 == temp3) {
-        temp4 = arc4random() % 5;
-    }
-    temp5 = arc4random() % 5;
-    while (temp5 == temp1 || temp5 == temp2 || temp5 == temp3 || temp5 == temp4) {
-        temp5 = arc4random() % 5;
-    }
-    
-    if (temp1 == 0) {
-        pinkPortal = 1;
-    } else if (temp2 == 0) {
-        pinkPortal = 2;
-    } else if (temp3 == 0) {
-        pinkPortal = 3;
-    } else if (temp4 == 0) {
-        pinkPortal = 4;
-    } else {
-        pinkPortal = 5;
-    }
-    
-    if (temp1 == 3) {
-        bluePortal = 1;
-    } else if (temp2 == 3) {
-        bluePortal = 2;
-    } else if (temp3 == 3) {
-        bluePortal = 3;
-    } else if (temp4 == 3) {
-        bluePortal = 4;
-    } else {
-        bluePortal = 5;
-    }
-   
-    
-    tester = [[orderedArray objectAtIndex:temp1] objectAtIndex:0];
-    rb0 = tester.floatValue;
-    tester = [[orderedArray objectAtIndex:temp1] objectAtIndex:1];
-    gb0 = tester.floatValue;
-    tester = [[orderedArray objectAtIndex:temp1] objectAtIndex:2];
-    bb0 = tester.floatValue;
-    tester = [[orderedArray objectAtIndex:temp1] objectAtIndex:3];
-    ab0 = tester.floatValue;
-    tester = [[orderedArray objectAtIndex:temp2] objectAtIndex:0];
-    rb1 = tester.floatValue;
-    tester = [[orderedArray objectAtIndex:temp2] objectAtIndex:1];
-    gb1 = tester.floatValue;
-    tester = [[orderedArray objectAtIndex:temp2] objectAtIndex:2];
-    bb1 = tester.floatValue;
-    tester = [[orderedArray objectAtIndex:temp2] objectAtIndex:3];
-    ab1 = tester.floatValue;
-    tester = [[orderedArray objectAtIndex:temp3] objectAtIndex:0];
-    rb2 = tester.floatValue;
-    tester = [[orderedArray objectAtIndex:temp3] objectAtIndex:1];
-    gb2 = tester.floatValue;
-    tester = [[orderedArray objectAtIndex:temp3] objectAtIndex:2];
-    bb2 = tester.floatValue;
-    tester = [[orderedArray objectAtIndex:temp3] objectAtIndex:3];
-    ab2 = tester.floatValue;
-    tester = [[orderedArray objectAtIndex:temp4] objectAtIndex:0];
-    rb3 = tester.floatValue;
-    tester = [[orderedArray objectAtIndex:temp4] objectAtIndex:1];
-    gb3 = tester.floatValue;
-    tester = [[orderedArray objectAtIndex:temp4] objectAtIndex:2];
-    bb3 = tester.floatValue;
-    tester = [[orderedArray objectAtIndex:temp4] objectAtIndex:3];
-    ab3 = tester.floatValue;
-    tester = [[orderedArray objectAtIndex:temp5] objectAtIndex:0];
-    rb4 = tester.floatValue;
-    tester = [[orderedArray objectAtIndex:temp5] objectAtIndex:1];
-    gb4 = tester.floatValue;
-    tester = [[orderedArray objectAtIndex:temp5] objectAtIndex:2];
-    bb4 = tester.floatValue;
-    tester = [[orderedArray objectAtIndex:temp5] objectAtIndex:3];
-    ab4 = tester.floatValue;
-    
-}
-
 -(void) createGradient
 {
     // Create an instance of the HeyaldaGLDrawNode class and add it to this layer.
-    HeyaldaGLDrawNode* glDrawNode = [[HeyaldaGLDrawNode alloc] init];
-    [self addChild:glDrawNode];
+//    HeyaldaGLDrawNode* glDrawNode = [[HeyaldaGLDrawNode alloc] init];
+//    [self addChild:glDrawNode];
     
     CGSize screenSize = [CCDirector sharedDirector].winSize;
     
-    stepSize = screenSize.height/(numColors-1);
-    colors = [[NSMutableArray alloc] init];
-    for (int k = 0; k < numColors; ++ k) //rows
-    {
-        CGPoint thisLeftCorner = ccp(screenSize.width*5/6, stepSize*k);
-        CGPoint thisRightCorner = ccp(screenSize.width, stepSize*k);
-        float r = (arc4random() % 255);
-        float b = (arc4random() % 255);
-        float g = (arc4random() % 255);
-        NSArray* thiscolor = [NSArray arrayWithObjects:[NSNumber numberWithFloat:r],
-                              [NSNumber numberWithFloat:g],
-                              [NSNumber numberWithFloat:b], nil];
-        [colors addObject:thiscolor];
-        [glDrawNode addToDynamicVerts2D:thisLeftCorner withColor:ccc4(r,g,b, 255)];
-        [glDrawNode addToDynamicVerts2D:thisRightCorner withColor:ccc4(r,g,b, 255)];
-
-    }
+    
+    
+//    stepSize = screenSize.height/(numColors-1);
+//    colors = [[NSMutableArray alloc] init];
+//    for (int k = 0; k < numColors; ++ k) //rows
+//    {
+//        CGPoint thisLeftCorner = ccp(screenSize.width*5/6, stepSize*k);
+//        CGPoint thisRightCorner = ccp(screenSize.width, stepSize*k);
+//        r = (arc4random() % 255);
+//        b = (arc4random() % 255);
+//        g = (arc4random() % 255);
+//        NSArray* thiscolor = [NSArray arrayWithObjects:[NSNumber numberWithFloat:r],
+//                              [NSNumber numberWithFloat:g],
+//                              [NSNumber numberWithFloat:b], nil];
+//        [colors addObject:thiscolor];
+//        [glDrawNode addToDynamicVerts2D:thisLeftCorner withColor:ccc4(r,g,b, 255)];
+//        [glDrawNode addToDynamicVerts2D:thisRightCorner withColor:ccc4(r,g,b, 255)];
+//
+//    }
     
     
 //    // Define the four corners of the screen
@@ -364,11 +329,11 @@ NSMutableArray* colors;
 //    [glDrawNode addToDynamicVerts2D:upperRightCorner withColor:ccc4(0,100, 200, 255)];
 //    [glDrawNode addToDynamicVerts2D:lowerRightCorner withColor:ccc4(0,200, 100, 255)];
     
-    // Rednudant because the defualt is kDrawTriangleStrip, but setting it here for this example.
-    glDrawNode.glDrawMode = kDrawTriangleStrip;
-    
-    // Tell the HeyaldaGLDrawNode that it is ready to draw when it's draw method is called.
-    [glDrawNode setReadyToDrawDynamicVerts:YES];
+//    // Rednudant because the defualt is kDrawTriangleStrip, but setting it here for this example.
+//    glDrawNode.glDrawMode = kDrawTriangleStrip;
+//    
+//    // Tell the HeyaldaGLDrawNode that it is ready to draw when it's draw method is called.
+//    [glDrawNode setReadyToDrawDynamicVerts:YES];
 
 }
 
@@ -377,33 +342,24 @@ NSMutableArray* colors;
 {
 //    glClearColor(red, blue, green, alpha);
 //    
-//    ccDrawSolidRect(ccp(portalPosition1-32, 0), ccp(portalPosition1, WINDOW_HEIGHT), ccc4f(white, white, white, 1));
-//    ccDrawSolidRect(ccp(portalPosition1-32, portalHeight1), ccp(portalPosition1, portalHeight1+portalSize), ccc4f(0, 1, 1, 1.0));
-//    ccDrawSolidRect(ccp(portalPosition2-32, 0), ccp(portalPosition2, WINDOW_HEIGHT), ccc4f(white, white, white, 1));
-//    ccDrawSolidRect(ccp(portalPosition2-32, portalHeight2), ccp(portalPosition2, portalHeight2+portalSize), ccc4f(1, 0, 1, 1.0));
+    //ccDrawSolidRect(ccp(portalPosition1-32, 0), ccp(portalPosition1, WINDOW_HEIGHT), ccc4f(white, white, white, 1));
+    ccDrawSolidRect(ccp(portalPosition1-32, portalHeight1), ccp(portalPosition1, portalHeight1+portalSize), ccc4f(0, 1, 1, 1.0));
+    //ccDrawSolidRect(ccp(portalPosition2-32, 0), ccp(portalPosition2, WINDOW_HEIGHT), ccc4f(white, white, white, 1));
+    ccDrawSolidRect(ccp(portalPosition2-32, portalHeight2), ccp(portalPosition2, portalHeight2+portalSize), ccc4f(1, 0, 1, 1.0));
 
+   // glClearColor(1, 1, 1, 1);
     
-    if (globalPosMov != 0) {
-        CGPoint triFontVert = CGPointMake(triCentX + radius*cos(triFrontRef + scaleFactor), triCentY + radius*sin(triFrontRef + scaleFactor));
-        CGPoint triTopVert = CGPointMake(triCentX + radius*cos(triTopRef + scaleFactor), triCentY + radius*sin(triTopRef + scaleFactor));
-        CGPoint triBottomVert = CGPointMake(triCentX + radius*cos(triBottomRef + scaleFactor), triCentY + radius*sin(triBottomRef + scaleFactor));
-        CGPoint vertices2[] = {triFontVert, triTopVert,triBottomVert};
-        ccDrawSolidPoly(vertices2, 3, ccc4f(0, 1, 1, 1));
-    } else {
-        CGPoint triFontVert = CGPointMake(triCentX + radius*cos(triFrontRef + scaleFactor), triCentY + radius*sin(triFrontRef + scaleFactor));
-        CGPoint triTopVert = CGPointMake(triCentX + radius*cos(triTopRef + scaleFactor), triCentY + radius*sin(triTopRef + scaleFactor));
-        CGPoint triBottomVert = CGPointMake(triCentX + radius*cos(triBottomRef + scaleFactor), triCentY + radius*sin(triBottomRef + scaleFactor));
-        CGPoint vertices2[] = {triFontVert, triTopVert,triBottomVert};
-        ccDrawSolidPoly(vertices2, 3, ccc4f(0, 1, 1, 1));
+//    CGPoint triFontVert = CGPointMake(triCentX + radius*cos(triFrontRef + scaleFactor), triCentY + radius*sin(triFrontRef + scaleFactor));
+//    CGPoint triTopVert = CGPointMake(triCentX + radius*cos(triTopRef + scaleFactor), triCentY + radius*sin(triTopRef + scaleFactor));
+//    CGPoint triBottomVert = CGPointMake(triCentX + radius*cos(triBottomRef + scaleFactor), triCentY + radius*sin(triBottomRef + scaleFactor));
+//    CGPoint vertices2[] = {triFontVert, triTopVert, triBottomVert};
+//    ccDrawSolidPoly(vertices2, 3, ccc4f(1, 0, 1, 1));
+    
+    for (int i = 0; i < 6; i++) {
+        ccDrawSolidRect(ccp(WINDOW_WIDTH*5/6, WINDOW_HEIGHT * i/6), ccp(WINDOW_WIDTH,WINDOW_HEIGHT * (i+1)/6), ccc4f(1, 1, 1, 1));
     }
     
-    
-    ccDrawColor4F(0, 1, 1, 1);
-    //CGPoint vertices2[] = {ccp(150, 120), ccp(180, 120), ccp(165, 150)};
-    //CGPoint vertices2[] = { ccp(0,0), ccp(0,screenSize.height*0.5), ccp(screenSize.width*0.5,screenSize.height*0.5), ccp(screenSize.width*0.5,0) };
-    //(vertices2, 3, true);
-//
-//    CGSize screenSize = [CCDirector sharedDirector].winSize;
+
     
 }
 
