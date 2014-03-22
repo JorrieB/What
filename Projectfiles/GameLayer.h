@@ -11,7 +11,22 @@
 
 @interface GameLayer : CCLayer
 {
-    CCSprite* penguin;
+    //the portal sprites are declared here so we can use them globally
+    CCSprite* portal1;
+    CCSprite* topPillar1;
+    CCSprite* bottomPillar1;
+    CCSprite* portal2;
+    CCSprite* topPillar2;
+    CCSprite* bottomPillar2;
+    
+    
+    CCSprite* purpleTri;
+    CCSprite* blueTri;
+    CCSprite* yellowTri;
+    CCSprite* orangeTri;
+    CCSprite* pinkTri;
+    CCSprite* greenTri;
+    NSMutableArray *colorObjects;
 }
 
 +(id) scene;

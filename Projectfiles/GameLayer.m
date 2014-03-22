@@ -10,43 +10,42 @@
 #import "HeyaldaGLDrawNode.h"
 
 
-NSMutableArray* buttonColors;
 NSMutableArray* randomizationArray; //randomization array is a reshuffled ordered array. This is used to color the buttons
 NSMutableArray* orderedArray; //holds the button colors
 NSArray *purpleA,*redA,*blueA,*fadedBlueA,*greenA; //each array is a color
 NSInteger* temp; //temporarily holds values for button randomization purposes
 NSNumber* tester;
 int temp1, temp2, temp3, temp4, temp5; //these are the button randomization variables
-int portalPosition1 = 0; //this keeps track of where the first portal strip is
-int portalPosition2 = 240; //this keeps track of where the second portal strip is
+int portalPosition1; //this keeps track of where the first portal strip is
+int portalPosition2; //this keeps track of where the second portal strip is
 int WINDOW_WIDTH;
 int WINDOW_HEIGHT;
-int portalHeight1; //portal1.position.y
-int portalHeight2; //portal2.position.y
-int portalSize; //how tall the portal is
+CGFloat portalHeight1; //portal1.position.y
+CGFloat portalHeight2; //portal2.position.y
+int portalSize = 25; //how tall the portal is
 int spriteHeight = 15; //estimate on sprite size for collision detection
 int spriteWidth = 43;
 bool collisionHappened = false;
 int score = 0; //unimplemented score counter
-float red = 1.0, blue = 1.0, green = 1.0, alpha = 1.0;
-float bb0, bb1, bb2, bb3, bb4, gb0, gb1, gb2, gb3, gb4, rb0, rb1, rb2, rb3, rb4, ab0, ab1, ab2, ab3, ab4;//randomization variables for the button colors
+//float red = 1.0, blue = 1.0, green = 1.0, alpha = 1.0;
+//float bb0, bb1, bb2, bb3, bb4, gb0, gb1, gb2, gb3, gb4, rb0, rb1, rb2, rb3, rb4, ab0, ab1, ab2, ab3, ab4;//randomization variables for the button colors
 int pinkPortal, bluePortal, currentTouch; //keeps track of whether the background is properly set or not
-int portalSpeed = 2;
-int white = 1; //flips the portal strips from white to black; if (white == 1) stripcolor = white;
-float static triFrontRef = 0, triTopRef = 3*M_PI/4, triBottomRef = 5*M_PI/4; //variables that we will base the tilt of the triangle on
-CGPoint* triFontVert, triTopVert, triBottomVert; //the actual vertex values
+float portalSpeed = 5;
 CGPoint* triCenter;
 int triCentX,triCentY;
-float scaleFactor;
+float shipScaleFactor = .2;
+float portalScaleFactor = .44;
+float pillarScaleFactor = .5;
 int globalPosMov;
 int radius = 20;
 float smoothTwist;
-
+int shipLayerInteger = 5;
+int portalLayerInteger = 4;
+int currentShipTag = 3;
+float shipRotation = 0;
+int colorPortal1, colorPortal2;
 
 float r,g,b;
-
-int numColors = 6;
-int stepSize;
 
 @implementation GameLayer
 
@@ -64,66 +63,182 @@ int stepSize;
 {
     KKInput* input = [KKInput sharedInput];
     CGPoint posMove = [input locationOfAnyTouchInPhase:KKTouchPhaseStationary];
-    globalPosMov = posMove.x;
+    //globalPosMov = posMove.x;
     //CGPoint triCenter = CGPointMake(triCentX, triCentY);
+    CCSprite* tempSprite = [self getChildByTag:currentShipTag];
     
+//    CCArray* touches = [KKInput sharedInput].touches;
+//    KKInput* touch;
+    //CCARRAY_FOREACH(touches, touch)
+//    for (int i = 0; i < 2; i++)
+//    {
+//        touch = [touches objectAtIndex:i];
+//        CGPoint posMove = [touch locationOfAnyTouchInPhase:KKTouchPhaseStationary];
+//        if (posMove.x < WINDOW_WIDTH/6) {
+//            if (posMove.x != 0 && posMove.y != 0) {
+//                smoothTwist = (triCentY - posMove.y) * .5;
+//                triCentY = triCentY + .1*(posMove.y - triCentY);
+//                shipRotation = .4*(triCentY - posMove.y);
+//                tempSprite.rotation = shipRotation;
+//                tempSprite.position = ccp(triCentX, triCentY);
+//            } else {
+//                shipRotation = smoothTwist;
+//                tempSprite.rotation = shipRotation;
+//                smoothTwist = smoothTwist * .8;
+//            }
+//        } else if (posMove.x > WINDOW_WIDTH*5/6){
+//            [self backgroundSwitch:posMove];
+//        }
+//    }
     
     if (posMove.x < WINDOW_WIDTH/6) {
-    //moves the penguin if you touch the screen in the appropriate place
         if (posMove.x != 0 && posMove.y != 0) {
-            scaleFactor = .005*(posMove.y - triCentY);
-            triCentY = triCentY + .15*(posMove.y - triCentY);
-            smoothTwist = (-posMove.y + penguin.position.y)* .5;
-            penguin.position = CGPointMake(penguin.position.x, penguin.position.y + .1*(posMove.y - penguin.position.y));
-            penguin.rotation = .5*(-posMove.y + penguin.position.y) - 90;
-            //penguin.position = CGPointMake(penguin.position.x, penguin.position.y + .1*(-penguin.position.y+posMove.y));
-            //glClearColor(0.f, 1.0f, 1.0f, 1.0f);
+            smoothTwist = (triCentY - posMove.y) * .5;
+            triCentY = triCentY + .1*(posMove.y - triCentY);
+            shipRotation = .4*(triCentY - posMove.y);
+            tempSprite.rotation = shipRotation;
+            tempSprite.position = ccp(triCentX, triCentY);
         } else {
-            scaleFactor = scaleFactor*.9;
-            penguin.rotation = smoothTwist - 90;
-            smoothTwist = smoothTwist*.8;
+            shipRotation = smoothTwist;
+            tempSprite.rotation = shipRotation;
+            smoothTwist = smoothTwist * .8;
         }
     }
+    
+    
+    
+//    if (posMove.x < WINDOW_WIDTH/6) {
+//        CCSprite* tempSprite = [self getChildByTag:currentShipTag];
+//        if (posMove.x != 0 && posMove.y != 0) {
+//            scaleFactor = .005*(posMove.y - triCentY);
+//            triCentY = triCentY + .15*(posMove.y - triCentY);
+//            smoothTwist = (-posMove.y + tempSprite.position.y)* .5;
+//            tempSprite.position = CGPointMake(tempSprite.position.x, tempSprite.position.y + .1*(posMove.y - tempSprite.position.y));
+//            //tempSprite.rotation = .5*(-posMove.y + penguin.position.y) - 90;
+//        } else {
+//            scaleFactor = scaleFactor*.9;
+//            tempSprite.rotation = smoothTwist - 90;
+//            smoothTwist = smoothTwist*.8;
+//        }
+//    }
     
     if (posMove.x > WINDOW_WIDTH*5/6){
         [self backgroundSwitch:posMove];
     }
 
     //The strips that move across the screen are defined here.
-    if (portalPosition1 < 0) {
-        portalPosition1 = WINDOW_WIDTH;
-        portalHeight1 = arc4random() % (WINDOW_HEIGHT - portalSize);
-    }
-    //first if will be run on the collision event. it will give the player enough time to reorient
-    if (portalPosition1 > WINDOW_WIDTH) {
-        portalPosition1 = portalPosition1 - portalSpeed;
-    } else {
-        portalPosition1 = ((portalPosition1 - portalSpeed) % WINDOW_WIDTH);
-    }
-    
-    if (portalPosition2 < 0) {
-        portalPosition2 = WINDOW_WIDTH;
-        portalHeight2 = arc4random() % (WINDOW_HEIGHT - portalSize);
-    }
-    //first if will be run on the collision event. it will give the player enough time to reorient
-    if (portalPosition2 > WINDOW_WIDTH) {
-        portalPosition2 = portalPosition2 - portalSpeed;
+    if (portalPosition1 < -30) {
+        [self portalOneSpriteChange:((arc4random()%5)+6)];
+        portalPosition1 = WINDOW_WIDTH - 30;
+        portalHeight1 = arc4random() % (WINDOW_HEIGHT*2/3)+(WINDOW_HEIGHT/6);
+        [self repositionPortal1];
         
     } else {
-        portalPosition2 = ((portalPosition2 - portalSpeed) % WINDOW_WIDTH);
+        portalPosition1 = portalPosition1 - portalSpeed;
+        [self repositionPortal1];
     }
+    //first if will be run on the collision event. it will give the player enough time to reorient
+//    if (portalPosition1 > WINDOW_WIDTH) {
+//        portalPosition1 = portalPosition1 - portalSpeed;
+//        [self repositionPortal1];
+//
+//        //portal1.position = portal1.position - portalSpeed;
+//    } else {
+//        portalPosition1 = (portalPosition1 - portalSpeed);
+//        [self repositionPortal1];
+//
+//        //portal1.position = ((portal1.position - portalSpeed) % WINDOW_WIDTH);
+//
+//    }
     
-    if (penguin.position.x == portalPosition1 || penguin.position.x == portalPosition2){
-        red = (rand() % 10) * .1;
-        blue = (rand() % 10) * .1;
-        green = (rand() % 10) * .1;
-        alpha = (rand() % 10) * .1;
-        }
+    if (portalPosition2 < -30) {
+        [self portalTwoSpriteChange:((arc4random()%5)+11)];
+        portalPosition2 = WINDOW_WIDTH - 30;
+        portalHeight2 = arc4random() % (WINDOW_HEIGHT*2/3)+(WINDOW_HEIGHT/6);
+        [self repositionPortal2];
+    } else {
+        portalPosition2 = portalPosition2 - portalSpeed;
+        [self repositionPortal2];
+    }
+//    //first if will be run on the collision event. it will give the player enough time to reorient
+//    if (portalPosition2 > WINDOW_WIDTH) {
+//        //portal2.position = portal2.position - portalSpeed;
+//        portalPosition2 = portalPosition2 - portalSpeed;
+//        [self repositionPortal2];        
+//    } else {
+//        portalPosition2 = ((portalPosition2 - portalSpeed) % WINDOW_WIDTH);
+//        [self repositionPortal2];
+//    }
+    
+//    if (penguin.position.x == portalPosition1 || penguin.position.x == portalPosition2){
+//        red = (rand() % 10) * .1;
+//        blue = (rand() % 10) * .1;
+//        green = (rand() % 10) * .1;
+//        alpha = (rand() % 10) * .1;
+//        }
     
 
     [self collisionDetection];
 }
 
+-(void) repositionPortal1
+{
+    portal1.position = CGPointMake(portalPosition1, portalHeight1);
+    topPillar1.position = CGPointMake(portalPosition1, portalHeight1 + 155);
+    bottomPillar1.position = CGPointMake(portalPosition1, portalHeight1 - 161);
+}
+
+-(void) repositionPortal2
+{
+    portal2.position = CGPointMake(portalPosition2, portalHeight2);
+    topPillar2.position = CGPointMake(portalPosition2, portalHeight2 + 155);
+    bottomPillar2.position = CGPointMake(portalPosition2, portalHeight2 - 161);
+}
+
+-(void) spriteRepositionOnColor: (int) newSprite
+{
+    CCSprite* tempSprite = [self getChildByTag:newSprite];
+    tempSprite.rotation = shipRotation;
+    tempSprite.position = ccp(triCentX, triCentY);
+}
+
+
+/* takes which portal sprites it will redefine and an offset, which will be used
+ * to select using the sprite tags
+ */
+-(void) portalOneSpriteChange: (int) newColor
+{
+    //hide the sprites, from the scene so we don't just leave them in limbo
+    portal1.visible = false;
+    topPillar1.visible = false;
+    bottomPillar1.visible = false;
+    //assign whatever portal sprites were passed in to new portal objects
+    portal1 = [self getChildByTag:newColor];
+    topPillar1 = [self getChildByTag:newColor + 10];
+    bottomPillar1 = [self getChildByTag:newColor + 20];
+    portal1.visible = true;
+    topPillar1.visible = true;
+    bottomPillar1.visible = true;
+    colorPortal1 = newColor % 5;
+}
+
+/* this is a dumb copy of portalOneSpriteChange because I don't know objective C :(
+ */
+-(void) portalTwoSpriteChange: (int) newColor
+{
+    //hide the sprites, from the scene so we don't just leave them in limbo
+    portal2.visible = false;
+    topPillar2.visible = false;
+    bottomPillar2.visible = false;
+    //assign whatever portal sprites were passed in to new portal objects
+    portal2 = [self getChildByTag:newColor];
+    topPillar2 = [self getChildByTag:newColor+10];
+    bottomPillar2 = [self getChildByTag:newColor + 20];
+    portal2.visible = true;
+    topPillar2.visible = true;
+    bottomPillar2.visible = true;
+    colorPortal2 = newColor % 5;
+}
 
 
 
@@ -149,76 +264,72 @@ int stepSize;
 //
 //    }
     
-    if (posMove.y != 0) {
-        for (int i = 0; i < 6; i++){
-            if (posMove.y < WINDOW_HEIGHT * (i+1) / 6) {
-                [self shipSwitch: i];
+        for (int i = 0; i < 5; i++){
+            if (posMove.y < WINDOW_HEIGHT * (i+1) / 5) {
+                [self shipSwitch: (i + 1)];
                 break;
             }
-        }
     }
 }
 
 -(void) shipSwitch: (int) shipColor
 {
-//    purpleTri = [CCSprite spriteWithFile:@"purpleTri.png"];
-//    blueTri = [CCSprite spriteWithFile:@"blueTri.png"];
-//    orangeTri = [CCSprite spriteWithFile:@"orangeTri.png"];
-//    yellowTri = [CCSprite spriteWithFile:@"yellowTri.png"];
-//    pinkTri = [CCSprite spriteWithFile:@"pinkTri.png"];
-//    greenTri = [CCSprite spriteWithFile:@"greenTri.png"];
-//    
-//    NSArray *colorObjects = @[purpleTri,blueTri,orangeTri,yellowTri,pinkTri,greenTri];
-//    
-//    for (CCSprite* triangle in colorObjects) {
-//        triangle.scale = triangle.scale*.18;
-//        triangle.position = CGPointMake(WINDOW_WIDTH / 6, WINDOW_HEIGHT / 2);
-//        triangle.rotation = -90;
-//    }
-//    
-//    for (int i = 0; i < 6; i++) {
-//        [self addChild:[colorObjects objectAtIndex:i]];
-//    }
-//    
-    for (CCSprite* ship in colorObjects) {
-        ship.visible = false;
+    //only go through the color of changing the ship color if a different button has been pressed
+    if (currentShipTag != shipColor) {
+        for (int i = 1; i<6; i++) {
+            if (i == shipColor) {
+                currentShipTag = i;
+                CCSprite* tempSprite = [self getChildByTag:i];
+                [self spriteRepositionOnColor: i];
+                tempSprite.visible = true;
+            } else {
+                CCSprite *tempSprite = [self getChildByTag:i];
+                tempSprite.visible = false;
+            }
+        }
     }
-    CCSprite* temp = [colorObjects objectAtIndex:shipColor];
-    temp.visible = true;
 }
 
 // detect for collisions and run collision if one occurs
 -(void) collisionDetection
 {
     
-    if ((triCentX+spriteWidth > portalPosition1 && triCentX+spriteWidth < (portalPosition1+32)) || (triCentX +spriteWidth > portalPosition1 && triCentX + spriteWidth < (portalPosition1+32))) {
-        if (((triCentY + spriteHeight) > (portalHeight1 + portalSize)) || ((triCentY - spriteHeight) < portalHeight1)) {
-            collisionHappened = true;
-        } else if (!(currentTouch == bluePortal)) {
-            //collisionHappened = true;
-        }
-    }
-
-    if ((triCentX+spriteWidth > portalPosition2 && triCentX+spriteWidth < (portalPosition2+32)) || (triCentX +spriteWidth > portalPosition2 && triCentX + spriteWidth < (portalPosition2+32))) {
-        if (((triCentY + spriteHeight) > (portalHeight2 + portalSize)) || ((triCentY - spriteHeight) < portalHeight2)) {
-            collisionHappened = true;
-        } else if (!(currentTouch == pinkPortal)) {
-            //collisionHappened = true;
-        }
-    }
     
     
-    if (collisionHappened) {
-        [self collision];
-    }
+    
+    
+//    if ((triCentX+spriteWidth > portalPosition1 && triCentX+spriteWidth < (portalPosition1+32)) || (triCentX +spriteWidth > portalPosition1 && triCentX + spriteWidth < (portalPosition1+32))) {
+//        if (((triCentY + spriteHeight) > (portalHeight1 + portalSize)) || ((triCentY - spriteHeight) < portalHeight1)) {
+//            collisionHappened = true;
+//        } else if (!((currentShipTag%5) == colorPortal1)) {
+//            collisionHappened = true;
+//        }
+//    }
+//
+//    if ((triCentX+spriteWidth > portalPosition2 && triCentX+spriteWidth < (portalPosition2+32)) || (triCentX +spriteWidth > portalPosition2 && triCentX + spriteWidth < (portalPosition2+32))) {
+//        if (((triCentY + spriteHeight) > (portalHeight2 + portalSize)) || ((triCentY - spriteHeight) < portalHeight2)) {
+//            collisionHappened = true;
+//        } else if (!((currentShipTag%5) == colorPortal2)) {
+//            collisionHappened = true;
+//        }
+//    }
+//    
+//    
+//    if (collisionHappened) {
+//        [self collision];
+//    }
 }
 
 -(void) collision
 {
-    portalPosition1 = WINDOW_WIDTH * 1.5;
-    portalPosition2 = WINDOW_WIDTH * 2;
-    portalHeight1 = rand() % (WINDOW_HEIGHT - portalSize);
-    portalHeight2 = rand() % (WINDOW_HEIGHT - portalSize);
+    portalPosition1 = WINDOW_WIDTH * 1.5 - 30;
+    portalPosition2 = WINDOW_WIDTH * 2 - 30;
+    portalHeight1 = arc4random() % (WINDOW_HEIGHT*2/3)+(WINDOW_HEIGHT/6);
+    portalHeight2 = arc4random() % (WINDOW_HEIGHT*2/3)+(WINDOW_HEIGHT/6);
+    [self repositionPortal1];
+    [self repositionPortal2];
+    [self portalOneSpriteChange:((arc4random()%5)+6)];
+    [self portalTwoSpriteChange:((arc4random()%5)+6)];
     collisionHappened = false;
     score = 0;
     //[[SimpleAudioEngine sharedEngine] playEffect:@"explo2.wav"];
@@ -231,7 +342,6 @@ int stepSize;
 {
     if ((self = [super init])) {
         
-        //NSArray *colors = @[ccc4f(1, 0, 1, 1),ccc4f(1, 0, 0, 1),ccc4f(0, 0, 1, 1)];
         
         CCLabelTTF* jorrie = [CCLabelTTF labelWithString:@"JorrieB" fontName:@"AppleGothic" fontSize:48];
         jorrie.color = ccCYAN;
@@ -242,46 +352,153 @@ int stepSize;
         
         //glClearColor(red, blue, green, alpha);
         
-        purpleTri = [CCSprite spriteWithFile:@"purpleTri.png"];
-        blueTri = [CCSprite spriteWithFile:@"blueTri.png"];
-        orangeTri = [CCSprite spriteWithFile:@"orangeTri.png"];
-        yellowTri = [CCSprite spriteWithFile:@"yellowTri.png"];
-        pinkTri = [CCSprite spriteWithFile:@"pinkTri.png"];
-        greenTri = [CCSprite spriteWithFile:@"greenTri.png"];
+//        SKEmitterNode* rocketFlames = [NSKeyedUnarchiver unarchiveObjectWithFile:@"MyParticle.sks"];
+//        [self addChild:rocketFlames z:0 tag:7];
         
-        NSArray *colors = @[purpleTri,blueTri,orangeTri,yellowTri,pinkTri,greenTri];
-
-        NSMutableArray *colorObjects = [[NSMutableArray alloc] init];
-        [colorObjects addObjectsFromArray:colors];
-        //NSArray *colorObjects = @[purpleTri,blueTri,orangeTri,yellowTri,pinkTri,greenTri];
+//        CCSprite* testPortal = [CCSprite spriteWithFile:@"orangePortal.png"];
+//        testPortal.position = ccp(140, 180);
+//        testPortal.scale = testPortal.scale*portalScaleFactor;
+//        [self addChild:testPortal];
+//        CCSprite* testTopPillar = [CCSprite spriteWithFile:@"topOrangePillar.png"];
+//        testTopPillar.position = ccp(140, 180+155);
+//        testTopPillar.scale = testTopPillar.scale*pillarScaleFactor;
+//        testTopPillar.scaleY = 1.25;
+//        [self addChild:testTopPillar];
+//        CCSprite* testBottomPillar = [CCSprite spriteWithFile:@"orangePillar.png"];
+//        testBottomPillar.position = ccp(140, 180-161);
+//        testBottomPillar.scale = testBottomPillar.scale*pillarScaleFactor;
+//        testBottomPillar.scaleY = 1.25;
+//        [self addChild:testBottomPillar];
+//        CCSprite* testBottomPillar1 = [CCSprite spriteWithFile:@"bluePillar.png"];
+//        testBottomPillar1.position = ccp(180, 130);
+//        testBottomPillar1.scale = testBottomPillar1.scale*pillarScaleFactor;
+//        testBottomPillar1.scaleY = 1.2;
+//        [self addChild:testBottomPillar1];
         
-        for (int i = 0; i < 6; i++) {
-            [self addChild:[colorObjects objectAtIndex:i]];
+        
+        //add all the ships to the the scene
+        yellowTri = [CCSprite spriteWithFile:@"YellowNeon.png"];
+        [self addChild:yellowTri z:shipLayerInteger tag:5];
+        purpleTri = [CCSprite spriteWithFile:@"PurpleNeon.png"];
+        [self addChild:purpleTri z:shipLayerInteger tag:4];
+        blueTri = [CCSprite spriteWithFile:@"LightBlueNeon.png"];
+        [self addChild:blueTri z:shipLayerInteger tag:3];
+        orangeTri = [CCSprite spriteWithFile:@"OrangeNeon.png"];
+        [self addChild:orangeTri z:shipLayerInteger tag:2];
+        greenTri = [CCSprite spriteWithFile:@"GreenNeon.png"];
+        [self addChild:greenTri z:shipLayerInteger tag:1];
+        for (int i =1; i < 6; i++) {
+            CCSprite* tempSprite = [self getChildByTag:i];
+            tempSprite.scale = tempSprite.scale*shipScaleFactor;
         }
-
-        //penguin.visible = true;
-        //penguin.position = CGPointMake(screenSize.width / 6, imageHeight / 2);
-        //penguin.scale = penguin.scale*.17;
-        //penguin.rotation = -90;
+        
+        //add all the portal objects to the scene - top, bottom, and portal
+        //we add two copies because then we can handle two separate
+        //sets of collisions and have one color occur more than once in a row
+        CCSprite* greenPortal1 = [CCSprite spriteWithFile:@"greenPortal.png"];
+        [self addChild:greenPortal1 z:portalLayerInteger tag:6];
+        CCSprite* orangePortal1 = [CCSprite spriteWithFile:@"orangePortal.png"];
+        [self addChild:orangePortal1 z:portalLayerInteger tag:7];
+        CCSprite* bluePortal1 = [CCSprite spriteWithFile:@"bluePortal.png"];
+        [self addChild:bluePortal1 z:portalLayerInteger tag:8];
+        CCSprite* purplePortal1 = [CCSprite spriteWithFile:@"purplePortal.png"];
+        [self addChild:purplePortal1 z:portalLayerInteger tag:9];
+        CCSprite* yellowPortal1 = [CCSprite spriteWithFile:@"yellowPortal.png"];
+        [self addChild:yellowPortal1 z:portalLayerInteger tag:10];
+        CCSprite* greenPortal2 = [CCSprite spriteWithFile:@"greenPortal.png"];
+        [self addChild:greenPortal2 z:portalLayerInteger tag:11];
+        CCSprite* orangePortal2 = [CCSprite spriteWithFile:@"orangePortal.png"];
+        [self addChild:orangePortal2 z:portalLayerInteger tag:12];
+        CCSprite* bluePortal2 = [CCSprite spriteWithFile:@"bluePortal.png"];
+        [self addChild:bluePortal2 z:portalLayerInteger tag:13];
+        CCSprite* purplePortal2 = [CCSprite spriteWithFile:@"purplePortal.png"];
+        [self addChild:purplePortal2 z:portalLayerInteger tag:14];
+        CCSprite* yellowPortal2 = [CCSprite spriteWithFile:@"yellowPortal.png"];
+        [self addChild:yellowPortal2 z:portalLayerInteger tag:15];
+        //rescale all at once and set them to invisible. that way we don't
+        //need to worry about their position in the scene
+        for (int i = 6; i< 16; i++) {
+            CCSprite* tempSprite = [self getChildByTag:i];
+            tempSprite.scale = tempSprite.scale*portalScaleFactor;
+            tempSprite.visible = false;
+        }
+        
+        //add the above pillars in the exact same fashion
+        CCSprite* greenAbovePortal1 = [CCSprite spriteWithFile:@"topGreenPillar.png"];
+        [self addChild:greenAbovePortal1 z:shipLayerInteger tag:16];
+        CCSprite* orangeAbovePortal1 = [CCSprite spriteWithFile:@"topOrangePillar.png"];
+        [self addChild:orangeAbovePortal1 z:shipLayerInteger tag:17];
+        CCSprite* blueAbovePortal1 = [CCSprite spriteWithFile:@"topBluePillar.png"];
+        [self addChild:blueAbovePortal1 z:shipLayerInteger tag:18];
+        CCSprite* purpleAbovePortal1 = [CCSprite spriteWithFile:@"topPurplePillar.png"];
+        [self addChild:purpleAbovePortal1 z:shipLayerInteger tag:19];
+        CCSprite* yellowAbovePortal1 = [CCSprite spriteWithFile:@"topYellowPillar.png"];
+        [self addChild:yellowAbovePortal1 z:shipLayerInteger tag:20];
+        CCSprite* greenAbovePortal2 = [CCSprite spriteWithFile:@"topGreenPillar.png"];
+        [self addChild:greenAbovePortal2 z:shipLayerInteger tag:21];
+        CCSprite* orangeAbovePortal2 = [CCSprite spriteWithFile:@"topOrangePillar.png"];
+        [self addChild:orangeAbovePortal2 z:shipLayerInteger tag:22];
+        CCSprite* blueAbovePortal2 = [CCSprite spriteWithFile:@"topBluePillar.png"];
+        [self addChild:blueAbovePortal2 z:shipLayerInteger tag:23];
+        CCSprite* purpleAbovePortal2 = [CCSprite spriteWithFile:@"topPurplePillar.png"];
+        [self addChild:purpleAbovePortal2 z:shipLayerInteger tag:24];
+        CCSprite* yellowAbovePortal2 = [CCSprite spriteWithFile:@"topYellowPillar.png"];
+        [self addChild:yellowAbovePortal2 z:shipLayerInteger tag:25];
+        for (int i = 16; i < 26; i++) {
+            CCSprite* tempSprite = [self getChildByTag:i];
+            tempSprite.scale = tempSprite.scale*pillarScaleFactor;
+            tempSprite.scaleY = 1.2;
+            tempSprite.visible = false;
+        }
+        
+        CCSprite* greenBelowPortal1 = [CCSprite spriteWithFile:@"greenPillar.png"];
+        [self addChild:greenBelowPortal1 z:shipLayerInteger tag:26];
+        CCSprite* orangeBelowPortal1 = [CCSprite spriteWithFile:@"orangePillar.png"];
+        [self addChild:orangeBelowPortal1 z:shipLayerInteger tag:27];
+        CCSprite* blueBelowPortal1 = [CCSprite spriteWithFile:@"bluePillar.png"];
+        [self addChild:blueBelowPortal1 z:shipLayerInteger tag:28];
+        CCSprite* purpleBelowPortal1 = [CCSprite spriteWithFile:@"purplePillar.png"];
+        [self addChild:purpleBelowPortal1 z:shipLayerInteger tag:29];
+        CCSprite* yellowBelowPortal1 = [CCSprite spriteWithFile:@"yellowPillar.png"];
+        [self addChild:yellowBelowPortal1 z:shipLayerInteger tag:30];
+        CCSprite* greenBelowPortal2 = [CCSprite spriteWithFile:@"greenPillar.png"];
+        [self addChild:greenBelowPortal2 z:shipLayerInteger tag:31];
+        CCSprite* orangeBelowPortal2 = [CCSprite spriteWithFile:@"orangePillar.png"];
+        [self addChild:orangeBelowPortal2 z:shipLayerInteger tag:32];
+        CCSprite* blueBelowPortal2 = [CCSprite spriteWithFile:@"bluePillar.png"];
+        [self addChild:blueBelowPortal2 z:shipLayerInteger tag:33];
+        CCSprite* purpleBelowPortal2 = [CCSprite spriteWithFile:@"purplePillar.png"];
+        [self addChild:purpleBelowPortal2 z:shipLayerInteger tag:34];
+        CCSprite* yellowBelowPortal2 = [CCSprite spriteWithFile:@"yellowPillar.png"];
+        [self addChild:yellowBelowPortal2 z:shipLayerInteger tag:35];
+        for (int i = 26; i < 36; i++) {
+            CCSprite* tempSprite = [self getChildByTag:i];
+            tempSprite.scale = tempSprite.scale*pillarScaleFactor;
+            tempSprite.scaleY = 1.2;
+            tempSprite.visible = false;
+        }
         
         CGSize screenSize = [CCDirector sharedDirector].winSize;
         WINDOW_HEIGHT = screenSize.height;
         WINDOW_WIDTH = screenSize.width;
-        portalSize = WINDOW_HEIGHT/5;
         
+        portalPosition1 = 0;
+        portalPosition2 = WINDOW_WIDTH*.5;
         
-        for (CCSprite* triangle in colorObjects) {
-            triangle.scale = triangle.scale*.18;
-            triangle.position = CGPointMake(WINDOW_WIDTH / 6, WINDOW_HEIGHT / 2);
-            triangle.rotation = -90;
-        }
+        CCSprite* buttons = [CCSprite spriteWithFile:@"buttons.png"];
+        buttons.position = CGPointMake(WINDOW_WIDTH*5/6+ 45, WINDOW_HEIGHT*.5);
+        buttons.scaleY = buttons.scaleY*.66;
+        [self addChild:buttons z:shipLayerInteger +1];
         
-        
-        triCentX = WINDOW_WIDTH/6; // setting initial points
+        // setting initial points
+        triCentX = WINDOW_WIDTH/6;
         triCentY = WINDOW_HEIGHT/2;
+        
+        [KKInput sharedInput].multipleTouchEnabled = YES;
        
         [self createGradient];
         [self scheduleUpdate];
+        [self shipSwitch:currentShipTag + 1];
     }
     
     return self;
@@ -293,8 +510,8 @@ int stepSize;
     // Create an instance of the HeyaldaGLDrawNode class and add it to this layer.
 //    HeyaldaGLDrawNode* glDrawNode = [[HeyaldaGLDrawNode alloc] init];
 //    [self addChild:glDrawNode];
-    
-    CGSize screenSize = [CCDirector sharedDirector].winSize;
+//    
+//    CGSize screenSize = [CCDirector sharedDirector].winSize;
     
     
     
@@ -342,10 +559,10 @@ int stepSize;
 {
 //    glClearColor(red, blue, green, alpha);
 //    
-    //ccDrawSolidRect(ccp(portalPosition1-32, 0), ccp(portalPosition1, WINDOW_HEIGHT), ccc4f(white, white, white, 1));
-    ccDrawSolidRect(ccp(portalPosition1-32, portalHeight1), ccp(portalPosition1, portalHeight1+portalSize), ccc4f(0, 1, 1, 1.0));
-    //ccDrawSolidRect(ccp(portalPosition2-32, 0), ccp(portalPosition2, WINDOW_HEIGHT), ccc4f(white, white, white, 1));
-    ccDrawSolidRect(ccp(portalPosition2-32, portalHeight2), ccp(portalPosition2, portalHeight2+portalSize), ccc4f(1, 0, 1, 1.0));
+//    //ccDrawSolidRect(ccp(portalPosition1-32, 0), ccp(portalPosition1, WINDOW_HEIGHT), ccc4f(white, white, white, 1));
+//    ccDrawSolidRect(ccp(portalPosition1-32, portalHeight1), ccp(portalPosition1, portalHeight1+portalSize), ccc4f(0, 1, 1, 1.0));
+//    //ccDrawSolidRect(ccp(portalPosition2-32, 0), ccp(portalPosition2, WINDOW_HEIGHT), ccc4f(white, white, white, 1));
+//    ccDrawSolidRect(ccp(portalPosition2-32, portalHeight2), ccp(portalPosition2, portalHeight2+portalSize), ccc4f(1, 0, 1, 1.0));
 
    // glClearColor(1, 1, 1, 1);
     
@@ -355,9 +572,9 @@ int stepSize;
 //    CGPoint vertices2[] = {triFontVert, triTopVert, triBottomVert};
 //    ccDrawSolidPoly(vertices2, 3, ccc4f(1, 0, 1, 1));
     
-    for (int i = 0; i < 6; i++) {
-        ccDrawSolidRect(ccp(WINDOW_WIDTH*5/6, WINDOW_HEIGHT * i/6), ccp(WINDOW_WIDTH,WINDOW_HEIGHT * (i+1)/6), ccc4f(1, 1, 1, 1));
-    }
+//    for (int i = 0; i < 6; i++) {
+//        ccDrawSolidRect(ccp(WINDOW_WIDTH*5/6, WINDOW_HEIGHT * i/6), ccp(WINDOW_WIDTH,WINDOW_HEIGHT * (i+1)/6), ccc4f(1, 1, 1, 1));
+//    }
     
 
     
