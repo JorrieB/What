@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>B29A1B04-9EF3-4A32-8F48-3E11DE6E1FA9</string>
+	<key>IDESourceControlProjectName</key>
+	<string>HeyaldaOpenGLCustomDraw</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>2CD579FA-154F-4EBB-A133-7D76383CEA1B</key>
+		<string>https://github.com/JorrieB/What.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>The gradient/HeyaldaOpenGLCustomDraw.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>2CD579FA-154F-4EBB-A133-7D76383CEA1B</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/JorrieB/What.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>2CD579FA-154F-4EBB-A133-7D76383CEA1B</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>2CD579FA-154F-4EBB-A133-7D76383CEA1B</string>
+			<key>IDESourceControlWCCName</key>
+			<string>What</string>
+		</dict>
+	</array>
+</dict>
+</plist>
