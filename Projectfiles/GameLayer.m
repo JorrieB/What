@@ -61,49 +61,47 @@ float r,g,b;
 
 - (void) update:(ccTime)dt
 {
-    KKInput* input = [KKInput sharedInput];
-    CGPoint posMove = [input locationOfAnyTouchInPhase:KKTouchPhaseStationary];
+//    KKInput* input = [KKInput sharedInput];
+//    CGPoint posMove = [input locationOfAnyTouchInPhase:KKTouchPhaseStationary];
     //globalPosMov = posMove.x;
     //CGPoint triCenter = CGPointMake(triCentX, triCentY);
-    CCSprite* tempSprite = [self getChildByTag:currentShipTag];
+    CCSprite* tempSprite = (CCSprite *) [self getChildByTag:currentShipTag];
     
-//    CCArray* touches = [KKInput sharedInput].touches;
-//    KKInput* touch;
-    //CCARRAY_FOREACH(touches, touch)
-//    for (int i = 0; i < 2; i++)
-//    {
-//        touch = [touches objectAtIndex:i];
-//        CGPoint posMove = [touch locationOfAnyTouchInPhase:KKTouchPhaseStationary];
-//        if (posMove.x < WINDOW_WIDTH/6) {
-//            if (posMove.x != 0 && posMove.y != 0) {
-//                smoothTwist = (triCentY - posMove.y) * .5;
-//                triCentY = triCentY + .1*(posMove.y - triCentY);
-//                shipRotation = .4*(triCentY - posMove.y);
-//                tempSprite.rotation = shipRotation;
-//                tempSprite.position = ccp(triCentX, triCentY);
-//            } else {
-//                shipRotation = smoothTwist;
-//                tempSprite.rotation = shipRotation;
-//                smoothTwist = smoothTwist * .8;
-//            }
-//        } else if (posMove.x > WINDOW_WIDTH*5/6){
-//            [self backgroundSwitch:posMove];
-//        }
-//    }
-    
-    if (posMove.x < WINDOW_WIDTH/6) {
-        if (posMove.x != 0 && posMove.y != 0) {
-            smoothTwist = (triCentY - posMove.y) * .5;
-            triCentY = triCentY + .1*(posMove.y - triCentY);
-            shipRotation = .4*(triCentY - posMove.y);
-            tempSprite.rotation = shipRotation;
-            tempSprite.position = ccp(triCentX, triCentY);
-        } else {
-            shipRotation = smoothTwist;
-            tempSprite.rotation = shipRotation;
-            smoothTwist = smoothTwist * .8;
+    CCArray* touches = [KKInput sharedInput].touches;
+    KKInput* touch;
+    CCARRAY_FOREACH(touches, touch)
+    {
+        //CGPoint posMove = [touch locationOfAnyTouchInPhase:KKTouchPhaseStationary];
+        if (touch.anyTouchLocation.x < WINDOW_WIDTH/6) {
+            if (touch.anyTouchLocation.y != 0 && touch.anyTouchLocation.x != 0) {
+                smoothTwist = (triCentY - touch.anyTouchLocation.y) * .5;
+                triCentY = triCentY + .1*(touch.anyTouchLocation.y - triCentY);
+                shipRotation = .4*(triCentY - touch.anyTouchLocation.y);
+                tempSprite.rotation = shipRotation;
+                tempSprite.position = ccp(triCentX, triCentY);
+            } else {
+                shipRotation = smoothTwist;
+                tempSprite.rotation = shipRotation;
+                smoothTwist = smoothTwist * .8;
+            }
+        } else if (touch.anyTouchLocation.x > WINDOW_WIDTH*5/6){
+            [self backgroundSwitch:touch.anyTouchLocation];
         }
     }
+    
+//    if (posMove.x < WINDOW_WIDTH/6) {
+//        if (posMove.x != 0 && posMove.y != 0) {
+//            smoothTwist = (triCentY - posMove.y) * .5;
+//            triCentY = triCentY + .1*(posMove.y - triCentY);
+//            shipRotation = .4*(triCentY - posMove.y);
+//            tempSprite.rotation = shipRotation;
+//            tempSprite.position = ccp(triCentX, triCentY);
+//        } else {
+//            shipRotation = smoothTwist;
+//            tempSprite.rotation = shipRotation;
+//            smoothTwist = smoothTwist * .8;
+//        }
+//    }
     
     
     
@@ -122,9 +120,9 @@ float r,g,b;
 //        }
 //    }
     
-    if (posMove.x > WINDOW_WIDTH*5/6){
-        [self backgroundSwitch:posMove];
-    }
+//    if (posMove.x > WINDOW_WIDTH*5/6){
+//        [self backgroundSwitch:posMove];
+//    }
 
     //The strips that move across the screen are defined here.
     if (portalPosition1 < -30) {
@@ -197,7 +195,7 @@ float r,g,b;
 
 -(void) spriteRepositionOnColor: (int) newSprite
 {
-    CCSprite* tempSprite = [self getChildByTag:newSprite];
+    CCSprite* tempSprite = (CCSprite *) [self getChildByTag:newSprite];
     tempSprite.rotation = shipRotation;
     tempSprite.position = ccp(triCentX, triCentY);
 }
@@ -213,9 +211,9 @@ float r,g,b;
     topPillar1.visible = false;
     bottomPillar1.visible = false;
     //assign whatever portal sprites were passed in to new portal objects
-    portal1 = [self getChildByTag:newColor];
-    topPillar1 = [self getChildByTag:newColor + 10];
-    bottomPillar1 = [self getChildByTag:newColor + 20];
+    portal1 = (CCSprite *) [self getChildByTag:newColor];
+    topPillar1 = (CCSprite *) [self getChildByTag:newColor + 10];
+    bottomPillar1 =  (CCSprite *)[self getChildByTag:newColor + 20];
     portal1.visible = true;
     topPillar1.visible = true;
     bottomPillar1.visible = true;
@@ -231,9 +229,9 @@ float r,g,b;
     topPillar2.visible = false;
     bottomPillar2.visible = false;
     //assign whatever portal sprites were passed in to new portal objects
-    portal2 = [self getChildByTag:newColor];
-    topPillar2 = [self getChildByTag:newColor+10];
-    bottomPillar2 = [self getChildByTag:newColor + 20];
+    portal2 = (CCSprite *) [self getChildByTag:newColor];
+    topPillar2 = (CCSprite *) [self getChildByTag:newColor+10];
+    bottomPillar2 = (CCSprite *) [self getChildByTag:newColor + 20];
     portal2.visible = true;
     topPillar2.visible = true;
     bottomPillar2.visible = true;
@@ -279,11 +277,11 @@ float r,g,b;
         for (int i = 1; i<6; i++) {
             if (i == shipColor) {
                 currentShipTag = i;
-                CCSprite* tempSprite = [self getChildByTag:i];
+                CCSprite* tempSprite = (CCSprite *) [self getChildByTag:i];
                 [self spriteRepositionOnColor: i];
                 tempSprite.visible = true;
             } else {
-                CCSprite *tempSprite = [self getChildByTag:i];
+                CCSprite *tempSprite = (CCSprite *) [self getChildByTag:i];
                 tempSprite.visible = false;
             }
         }
@@ -388,7 +386,7 @@ float r,g,b;
         greenTri = [CCSprite spriteWithFile:@"GreenNeon.png"];
         [self addChild:greenTri z:shipLayerInteger tag:1];
         for (int i =1; i < 6; i++) {
-            CCSprite* tempSprite = [self getChildByTag:i];
+            CCSprite* tempSprite = (CCSprite *) [self getChildByTag:i];
             tempSprite.scale = tempSprite.scale*shipScaleFactor;
         }
         
@@ -418,7 +416,7 @@ float r,g,b;
         //rescale all at once and set them to invisible. that way we don't
         //need to worry about their position in the scene
         for (int i = 6; i< 16; i++) {
-            CCSprite* tempSprite = [self getChildByTag:i];
+            CCSprite* tempSprite = (CCSprite *) [self getChildByTag:i];
             tempSprite.scale = tempSprite.scale*portalScaleFactor;
             tempSprite.visible = false;
         }
@@ -445,7 +443,7 @@ float r,g,b;
         CCSprite* yellowAbovePortal2 = [CCSprite spriteWithFile:@"topYellowPillar.png"];
         [self addChild:yellowAbovePortal2 z:shipLayerInteger tag:25];
         for (int i = 16; i < 26; i++) {
-            CCSprite* tempSprite = [self getChildByTag:i];
+            CCSprite* tempSprite = (CCSprite *) [self getChildByTag:i];
             tempSprite.scale = tempSprite.scale*pillarScaleFactor;
             tempSprite.scaleY = 1.2;
             tempSprite.visible = false;
@@ -472,7 +470,7 @@ float r,g,b;
         CCSprite* yellowBelowPortal2 = [CCSprite spriteWithFile:@"yellowPillar.png"];
         [self addChild:yellowBelowPortal2 z:shipLayerInteger tag:35];
         for (int i = 26; i < 36; i++) {
-            CCSprite* tempSprite = [self getChildByTag:i];
+            CCSprite* tempSprite = (CCSprite *) [self getChildByTag:i];
             tempSprite.scale = tempSprite.scale*pillarScaleFactor;
             tempSprite.scaleY = 1.2;
             tempSprite.visible = false;
