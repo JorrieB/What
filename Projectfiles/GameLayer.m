@@ -22,7 +22,7 @@ int WINDOW_WIDTH;
 int WINDOW_HEIGHT;
 CGFloat portalHeight1; //portal1.position.y
 CGFloat portalHeight2; //portal2.position.y
-int portalSize = 25; //how tall the portal is
+int portalSize = 22; //how tall the portal is
 int spriteHeight = 15; //estimate on sprite size for collision detection
 int spriteWidth = 43;
 bool collisionHappened = false;
@@ -30,12 +30,12 @@ int score = 0; //unimplemented score counter
 //float red = 1.0, blue = 1.0, green = 1.0, alpha = 1.0;
 //float bb0, bb1, bb2, bb3, bb4, gb0, gb1, gb2, gb3, gb4, rb0, rb1, rb2, rb3, rb4, ab0, ab1, ab2, ab3, ab4;//randomization variables for the button colors
 int pinkPortal, bluePortal, currentTouch; //keeps track of whether the background is properly set or not
-float portalSpeed = 5;
+float portalSpeed = 4;
 CGPoint* triCenter;
 int triCentX,triCentY;
 float shipScaleFactor = .2;
 float portalScaleFactor = .44;
-float pillarScaleFactor = .5;
+float pillarScaleFactor = .3;
 int globalPosMov;
 int radius = 20;
 float smoothTwist;
@@ -44,6 +44,9 @@ int portalLayerInteger = 4;
 int currentShipTag = 3;
 float shipRotation = 0;
 int colorPortal1, colorPortal2;
+int scoreInt;
+float beatCounter = .030555555555555*2*M_PI;;
+double pulseCounter = 0;
 
 float r,g,b;
 
@@ -52,85 +55,127 @@ float r,g,b;
 +(id) scene //you can initialize as many scenes as you want under the scene. this just intializes
 //the GameLayer's scenes
 {
+//    CGSize screenSize = [CCDirector sharedDirector].winSize;
+//    WINDOW_HEIGHT = screenSize.height;
+//    WINDOW_WIDTH = screenSize.width;
     
     CCScene *scene = [CCScene node]; //We've initialized the scene. This needs to happen to
     CCLayer* layer = [GameLayer node]; // construct it as a ccscene
+//    CCLayer* leftSide;
+//    leftSide.contentSize = CGSizeMake(100, 500);
+//    leftSide.anchorPoint = CGPointMake(0, 0);
+//    leftSide.position = CGPointMake(0, 0);
+//    [scene addChild:leftSide];
+//    CCLayer* rightSide;
+//    rightSide.contentSize = CGSizeMake(100, 500);
+//    rightSide.anchorPoint = CGPointMake(1,0);
+//    rightSide.position = CGPointMake(WINDOW_WIDTH, 0);
+//    [scene addChild:rightSide];
+//    layer.size =
     [scene addChild:layer];
     return scene;
 }
 
 - (void) update:(ccTime)dt
 {
-//    KKInput* input = [KKInput sharedInput];
-//    CGPoint posMove = [input locationOfAnyTouchInPhase:KKTouchPhaseStationary];
+    
+    visibleShip.scale = visibleShip.scale + .1*sin(pulseCounter);
+    pulseCounter += beatCounter;
+    
+    //KKTouch* touch = [KKTouch ]
+    KKInput* input = [KKInput sharedInput];
+    //KKInput* leftTouch = [KKInput ]
+    //CGpoint posMove= input locationOfAnyTouchInPhase:KKTouchPhaseAny
+    CGPoint posMove = [input locationOfAnyTouchInPhase:KKTouchPhaseStationary];
+    CGPoint touch2 = [input locationOfAnyTouchInPhase:KKTouchPhaseStationary];
     //globalPosMov = posMove.x;
     //CGPoint triCenter = CGPointMake(triCentX, triCentY);
     CCSprite* tempSprite = (CCSprite *) [self getChildByTag:currentShipTag];
     
-    CCArray* touches = [KKInput sharedInput].touches;
-    KKInput* touch;
-    CCARRAY_FOREACH(touches, touch)
-    {
-        //CGPoint posMove = [touch locationOfAnyTouchInPhase:KKTouchPhaseStationary];
-        if (touch.anyTouchLocation.x < WINDOW_WIDTH/6) {
-            if (touch.anyTouchLocation.y != 0 && touch.anyTouchLocation.x != 0) {
-                smoothTwist = (triCentY - touch.anyTouchLocation.y) * .5;
-                triCentY = triCentY + .1*(touch.anyTouchLocation.y - triCentY);
-                shipRotation = .4*(triCentY - touch.anyTouchLocation.y);
-                tempSprite.rotation = shipRotation;
-                tempSprite.position = ccp(triCentX, triCentY);
-            } else {
-                shipRotation = smoothTwist;
-                tempSprite.rotation = shipRotation;
-                smoothTwist = smoothTwist * .8;
-            }
-        } else if (touch.anyTouchLocation.x > WINDOW_WIDTH*5/6){
-            [self backgroundSwitch:touch.anyTouchLocation];
-        }
-    }
-    
-//    if (posMove.x < WINDOW_WIDTH/6) {
-//        if (posMove.x != 0 && posMove.y != 0) {
-//            smoothTwist = (triCentY - posMove.y) * .5;
-//            triCentY = triCentY + .1*(posMove.y - triCentY);
-//            shipRotation = .4*(triCentY - posMove.y);
-//            tempSprite.rotation = shipRotation;
-//            tempSprite.position = ccp(triCentX, triCentY);
-//        } else {
-//            shipRotation = smoothTwist;
-//            tempSprite.rotation = shipRotation;
-//            smoothTwist = smoothTwist * .8;
+//    CCArray* touches = [KKInput sharedInput].touches;
+//    KKInput* touch;
+//    touch.
+//    CCARRAY_FOREACH(touches, touch)
+//    {
+//        
+//        //CGPoint posMove = [touch locationOfAnyTouchInPhase:KKTouchPhaseStationary];
+//        if (touch.location < WINDOW_WIDTH/6) {
+//            if (touch.anyTouchLocation.y != 0 && touch.anyTouchLocation.x != 0) {
+//                smoothTwist = (triCentY - touch.anyTouchLocation.y) * .5;
+//                triCentY = triCentY + .1*(touch.anyTouchLocation.y - triCentY);
+//                shipRotation = .4*(triCentY - touch.anyTouchLocation.y);
+//                tempSprite.rotation = shipRotation;
+//                tempSprite.position = ccp(triCentX, triCentY);
+//            } else {
+//                shipRotation = smoothTwist;
+//                tempSprite.rotation = shipRotation;
+//                smoothTwist = smoothTwist * .8;
+//            }
+//        } else if (touch.anyTouchLocation.x > WINDOW_WIDTH*5/6){
+//            [self backgroundSwitch:touch.anyTouchLocation];
 //        }
 //    }
     
+    if (posMove.x < WINDOW_WIDTH/6) {
+        if (posMove.x != 0 && posMove.y != 0) {
+            smoothTwist = (triCentY - posMove.y) * .5;
+            triCentY = triCentY + .1*(posMove.y - triCentY);
+            shipRotation = .4*(triCentY - posMove.y);
+            tempSprite.rotation = shipRotation;
+            tempSprite.position = ccp(triCentX, triCentY);
+        } else {
+            shipRotation = smoothTwist;
+            tempSprite.rotation = shipRotation;
+            smoothTwist = smoothTwist * .8;
+        }
+    }
+    
+    if (touch2.x < WINDOW_WIDTH/6) {
+        if (touch2.x != 0 && touch2.y != 0) {
+            smoothTwist = (triCentY - touch2.y) * .5;
+            triCentY = triCentY + .1*(touch2.y - triCentY);
+            shipRotation = .4*(triCentY - touch2.y);
+            tempSprite.rotation = shipRotation;
+            tempSprite.position = ccp(triCentX, triCentY);
+        } else {
+            shipRotation = smoothTwist;
+            tempSprite.rotation = shipRotation;
+            smoothTwist = smoothTwist * .8;
+        }
+    }
     
     
+//    
 //    if (posMove.x < WINDOW_WIDTH/6) {
-//        CCSprite* tempSprite = [self getChildByTag:currentShipTag];
+//        CCSprite* tempSprite = (CCSprite *) [self getChildByTag:currentShipTag];
 //        if (posMove.x != 0 && posMove.y != 0) {
-//            scaleFactor = .005*(posMove.y - triCentY);
+////            scaleFactor = .005*(posMove.y - triCentY);
 //            triCentY = triCentY + .15*(posMove.y - triCentY);
 //            smoothTwist = (-posMove.y + tempSprite.position.y)* .5;
 //            tempSprite.position = CGPointMake(tempSprite.position.x, tempSprite.position.y + .1*(posMove.y - tempSprite.position.y));
-//            //tempSprite.rotation = .5*(-posMove.y + penguin.position.y) - 90;
+//            tempSprite.rotation = .5*(-posMove.y + tempSprite.position.y) - 90;
 //        } else {
-//            scaleFactor = scaleFactor*.9;
+////            scaleFactor = scaleFactor*.9;
 //            tempSprite.rotation = smoothTwist - 90;
 //            smoothTwist = smoothTwist*.8;
 //        }
 //    }
     
-//    if (posMove.x > WINDOW_WIDTH*5/6){
-//        [self backgroundSwitch:posMove];
-//    }
+    if (posMove.x > WINDOW_WIDTH*5/6){
+        [self backgroundSwitch:posMove];
+    }
+    
+    if (touch2.x > WINDOW_WIDTH*5/6){
+        [self backgroundSwitch:touch2];
+    }
 
     //The strips that move across the screen are defined here.
     if (portalPosition1 < -30) {
         [self portalOneSpriteChange:((arc4random()%5)+6)];
         portalPosition1 = WINDOW_WIDTH - 30;
-        portalHeight1 = arc4random() % (WINDOW_HEIGHT*2/3)+(WINDOW_HEIGHT/6);
+        portalHeight1 = arc4random() % (WINDOW_HEIGHT*1/2)+(WINDOW_HEIGHT/5);
         [self repositionPortal1];
-        
+        [self scoreIncrement];
     } else {
         portalPosition1 = portalPosition1 - portalSpeed;
         [self repositionPortal1];
@@ -152,8 +197,9 @@ float r,g,b;
     if (portalPosition2 < -30) {
         [self portalTwoSpriteChange:((arc4random()%5)+11)];
         portalPosition2 = WINDOW_WIDTH - 30;
-        portalHeight2 = arc4random() % (WINDOW_HEIGHT*2/3)+(WINDOW_HEIGHT/6);
+        portalHeight2 = arc4random() % (WINDOW_HEIGHT*1/2)+(WINDOW_HEIGHT/3);
         [self repositionPortal2];
+        [self scoreIncrement];
     } else {
         portalPosition2 = portalPosition2 - portalSpeed;
         [self repositionPortal2];
@@ -207,14 +253,14 @@ float r,g,b;
 -(void) portalOneSpriteChange: (int) newColor
 {
     //hide the sprites, from the scene so we don't just leave them in limbo
-    portal1.visible = false;
+    //portal1.visible = false;
     topPillar1.visible = false;
     bottomPillar1.visible = false;
     //assign whatever portal sprites were passed in to new portal objects
-    portal1 = (CCSprite *) [self getChildByTag:newColor];
+    //portal1 = (CCSprite *) [self getChildByTag:newColor];
     topPillar1 = (CCSprite *) [self getChildByTag:newColor + 10];
     bottomPillar1 =  (CCSprite *)[self getChildByTag:newColor + 20];
-    portal1.visible = true;
+    //portal1.visible = true;
     topPillar1.visible = true;
     bottomPillar1.visible = true;
     colorPortal1 = newColor % 5;
@@ -225,14 +271,14 @@ float r,g,b;
 -(void) portalTwoSpriteChange: (int) newColor
 {
     //hide the sprites, from the scene so we don't just leave them in limbo
-    portal2.visible = false;
+    //portal2.visible = false;
     topPillar2.visible = false;
     bottomPillar2.visible = false;
     //assign whatever portal sprites were passed in to new portal objects
-    portal2 = (CCSprite *) [self getChildByTag:newColor];
+    //portal2 = (CCSprite *) [self getChildByTag:newColor];
     topPillar2 = (CCSprite *) [self getChildByTag:newColor+10];
     bottomPillar2 = (CCSprite *) [self getChildByTag:newColor + 20];
-    portal2.visible = true;
+    //portal2.visible = true;
     topPillar2.visible = true;
     bottomPillar2.visible = true;
     colorPortal2 = newColor % 5;
@@ -242,26 +288,6 @@ float r,g,b;
 
 -(void) backgroundSwitch: (CGPoint) posMove
 {
-    //currentTouch = 6;
-//    if (posMove.y != 0)
-//    {
-//        for (int k = 0; k < numColors; ++ k) //rows
-//        {
-//            if (posMove.y < stepSize*k) {
-//                NSArray *thiscolor = [colors objectAtIndex:k];
-//                r = [[thiscolor objectAtIndex:0] floatValue]/255;
-//                g = [[thiscolor objectAtIndex:1] floatValue]/255;
-//                b = [[thiscolor objectAtIndex:2] floatValue]/255;
-//                glClearColor(r, g, b, ab4);
-//                
-//                //glClearColor(1, 1, 1, 1);
-//                currentTouch = k;
-//                break;
-//            }
-//        }
-//
-//    }
-    
         for (int i = 0; i < 5; i++){
             if (posMove.y < WINDOW_HEIGHT * (i+1) / 5) {
                 [self shipSwitch: (i + 1)];
@@ -280,6 +306,7 @@ float r,g,b;
                 CCSprite* tempSprite = (CCSprite *) [self getChildByTag:i];
                 [self spriteRepositionOnColor: i];
                 tempSprite.visible = true;
+//                visibleShip = tempSprite;
             } else {
                 CCSprite *tempSprite = (CCSprite *) [self getChildByTag:i];
                 tempSprite.visible = false;
@@ -288,48 +315,66 @@ float r,g,b;
     }
 }
 
+-(void) scoreIncrement
+{
+    scoreInt++;
+    NSString* tempstring = [NSString stringWithFormat:@"%d", scoreInt];
+    score.string = tempstring;
+}
+
 // detect for collisions and run collision if one occurs
 -(void) collisionDetection
 {
+    if (triCentX < portalPosition1 + 15 && triCentX > portalPosition1 - 15) {
+        if (triCentY > portalHeight1 +portalSize || triCentY < portalHeight1 - portalSize - 5) {
+            collisionHappened = true;
+        } else if (!(currentShipTag%5 == colorPortal1)) {
+            collisionHappened = true;
+        }
+    }
+    
+    if (triCentX < portalPosition2 + 15 && triCentX > portalPosition2 - 15) {
+        if (triCentY > portalHeight2 +portalSize || triCentY < portalHeight2 - portalSize - 5) {
+            collisionHappened = true;
+        } else if (!(currentShipTag % 5 == colorPortal2)) {
+            collisionHappened = true;
+        }
+    }
+    
+    if (collisionHappened) {
+        [self collision];
+    }
     
     
-    
-    
-    
-//    if ((triCentX+spriteWidth > portalPosition1 && triCentX+spriteWidth < (portalPosition1+32)) || (triCentX +spriteWidth > portalPosition1 && triCentX + spriteWidth < (portalPosition1+32))) {
-//        if (((triCentY + spriteHeight) > (portalHeight1 + portalSize)) || ((triCentY - spriteHeight) < portalHeight1)) {
-//            collisionHappened = true;
-//        } else if (!((currentShipTag%5) == colorPortal1)) {
-//            collisionHappened = true;
-//        }
-//    }
-//
-//    if ((triCentX+spriteWidth > portalPosition2 && triCentX+spriteWidth < (portalPosition2+32)) || (triCentX +spriteWidth > portalPosition2 && triCentX + spriteWidth < (portalPosition2+32))) {
-//        if (((triCentY + spriteHeight) > (portalHeight2 + portalSize)) || ((triCentY - spriteHeight) < portalHeight2)) {
-//            collisionHappened = true;
-//        } else if (!((currentShipTag%5) == colorPortal2)) {
-//            collisionHappened = true;
-//        }
-//    }
-//    
-//    
-//    if (collisionHappened) {
-//        [self collision];
-//    }
 }
 
 -(void) collision
 {
-    portalPosition1 = WINDOW_WIDTH * 1.5 - 30;
-    portalPosition2 = WINDOW_WIDTH * 2 - 30;
-    portalHeight1 = arc4random() % (WINDOW_HEIGHT*2/3)+(WINDOW_HEIGHT/6);
-    portalHeight2 = arc4random() % (WINDOW_HEIGHT*2/3)+(WINDOW_HEIGHT/6);
-    [self repositionPortal1];
-    [self repositionPortal2];
-    [self portalOneSpriteChange:((arc4random()%5)+6)];
-    [self portalTwoSpriteChange:((arc4random()%5)+6)];
-    collisionHappened = false;
-    score = 0;
+//    portalPosition1 = WINDOW_WIDTH * 1.5 - 30;
+//    portalPosition2 = WINDOW_WIDTH * 2 - 30;
+//    portalHeight1 = arc4random() % (WINDOW_HEIGHT*2/3)+(WINDOW_HEIGHT/6);
+//    portalHeight2 = arc4random() % (WINDOW_HEIGHT*2/3)+(WINDOW_HEIGHT/6);
+//    [self portalOneSpriteChange:((arc4random()%5)+6)];
+//    [self portalTwoSpriteChange:((arc4random()%5)+11)];
+//    [self repositionPortal1];
+//    [self repositionPortal2];
+//    collisionHappened = false;
+//    score = 0;
+    [self unscheduleUpdate];
+    
+    id move1 = [CCMoveBy actionWithDuration:2.0f position:CGPointMake(100,0)];
+    id move2 = [CCMoveBy actionWithDuration:2.0f position:CGPointMake(100,0)];
+    id move3 = [CCMoveBy actionWithDuration:2.0f position:CGPointMake(100,0)];
+    id move4 = [CCMoveBy actionWithDuration:2.0f position:CGPointMake(100,0)];
+    //[bottomPillar1 runAction:move1];
+    [bottomPillar2 runAction:move2];
+    [topPillar1 runAction:move3];
+    [topPillar2 runAction:move4];
+    id shipRotate = [CCRotateBy actionWithDuration:2.0f angle:-500];
+    id shipFall = [CCMoveBy actionWithDuration:2.0f position:CGPointMake(0, -100)];
+    id shipGravityFall = [CCAccelAmplitude actionWithAction:move1 duration:2.0f];
+    [bottomPillar1 runAction:shipRotate];
+//    [[SimpleAudioEngine sharedEngine] playEffect:@"electronicFunky.mp3"];
     //[[SimpleAudioEngine sharedEngine] playEffect:@"explo2.wav"];
     
 }
@@ -341,12 +386,10 @@ float r,g,b;
     if ((self = [super init])) {
         
         
-        CCLabelTTF* jorrie = [CCLabelTTF labelWithString:@"JorrieB" fontName:@"AppleGothic" fontSize:48];
-        jorrie.color = ccCYAN;
-        jorrie.position = [CCDirector sharedDirector].screenCenter;
-       // [self addChild:jorrie];
+        
         
         [[SimpleAudioEngine sharedEngine] preloadEffect:@"explo2.wav"];
+        [[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"electronicFunky.mp3" loop:true];
         
         //glClearColor(red, blue, green, alpha);
         
@@ -357,133 +400,115 @@ float r,g,b;
 //        testPortal.position = ccp(140, 180);
 //        testPortal.scale = testPortal.scale*portalScaleFactor;
 //        [self addChild:testPortal];
-//        CCSprite* testTopPillar = [CCSprite spriteWithFile:@"topOrangePillar.png"];
+//        CCSprite* testTopPillar = [CCSprite spriteWithFile:@"redNeonPillar.png"];
 //        testTopPillar.position = ccp(140, 180+155);
 //        testTopPillar.scale = testTopPillar.scale*pillarScaleFactor;
-//        testTopPillar.scaleY = 1.25;
+//        //testTopPillar.scaleY = 1.25;
 //        [self addChild:testTopPillar];
-//        CCSprite* testBottomPillar = [CCSprite spriteWithFile:@"orangePillar.png"];
+//        CCSprite* testBottomPillar = [CCSprite spriteWithFile:@"redNeonPillar.png"];
 //        testBottomPillar.position = ccp(140, 180-161);
 //        testBottomPillar.scale = testBottomPillar.scale*pillarScaleFactor;
-//        testBottomPillar.scaleY = 1.25;
+//        //testBottomPillar.scaleY = 1.25;
 //        [self addChild:testBottomPillar];
-//        CCSprite* testBottomPillar1 = [CCSprite spriteWithFile:@"bluePillar.png"];
+//        CCSprite* testBottomPillar1 = [CCSprite spriteWithFile:@"greenNeonPillar.png"];
 //        testBottomPillar1.position = ccp(180, 130);
 //        testBottomPillar1.scale = testBottomPillar1.scale*pillarScaleFactor;
-//        testBottomPillar1.scaleY = 1.2;
+        //testBottomPillar1.scaleY = 1.2;
 //        [self addChild:testBottomPillar1];
         
         
         //add all the ships to the the scene
-        yellowTri = [CCSprite spriteWithFile:@"YellowNeon.png"];
+        yellowTri = [CCSprite spriteWithFile:@"NPurple.png"];
         [self addChild:yellowTri z:shipLayerInteger tag:5];
-        purpleTri = [CCSprite spriteWithFile:@"PurpleNeon.png"];
+        purpleTri = [CCSprite spriteWithFile:@"NBlue.png"];
         [self addChild:purpleTri z:shipLayerInteger tag:4];
-        blueTri = [CCSprite spriteWithFile:@"LightBlueNeon.png"];
+        blueTri = [CCSprite spriteWithFile:@"NYellow.png"];
         [self addChild:blueTri z:shipLayerInteger tag:3];
-        orangeTri = [CCSprite spriteWithFile:@"OrangeNeon.png"];
+        orangeTri = [CCSprite spriteWithFile:@"NGreen.png"];
         [self addChild:orangeTri z:shipLayerInteger tag:2];
-        greenTri = [CCSprite spriteWithFile:@"GreenNeon.png"];
+        greenTri = [CCSprite spriteWithFile:@"NRed.png"];
         [self addChild:greenTri z:shipLayerInteger tag:1];
         for (int i =1; i < 6; i++) {
             CCSprite* tempSprite = (CCSprite *) [self getChildByTag:i];
             tempSprite.scale = tempSprite.scale*shipScaleFactor;
         }
         
-        //add all the portal objects to the scene - top, bottom, and portal
-        //we add two copies because then we can handle two separate
-        //sets of collisions and have one color occur more than once in a row
-        CCSprite* greenPortal1 = [CCSprite spriteWithFile:@"greenPortal.png"];
-        [self addChild:greenPortal1 z:portalLayerInteger tag:6];
-        CCSprite* orangePortal1 = [CCSprite spriteWithFile:@"orangePortal.png"];
-        [self addChild:orangePortal1 z:portalLayerInteger tag:7];
-        CCSprite* bluePortal1 = [CCSprite spriteWithFile:@"bluePortal.png"];
-        [self addChild:bluePortal1 z:portalLayerInteger tag:8];
-        CCSprite* purplePortal1 = [CCSprite spriteWithFile:@"purplePortal.png"];
-        [self addChild:purplePortal1 z:portalLayerInteger tag:9];
-        CCSprite* yellowPortal1 = [CCSprite spriteWithFile:@"yellowPortal.png"];
-        [self addChild:yellowPortal1 z:portalLayerInteger tag:10];
-        CCSprite* greenPortal2 = [CCSprite spriteWithFile:@"greenPortal.png"];
-        [self addChild:greenPortal2 z:portalLayerInteger tag:11];
-        CCSprite* orangePortal2 = [CCSprite spriteWithFile:@"orangePortal.png"];
-        [self addChild:orangePortal2 z:portalLayerInteger tag:12];
-        CCSprite* bluePortal2 = [CCSprite spriteWithFile:@"bluePortal.png"];
-        [self addChild:bluePortal2 z:portalLayerInteger tag:13];
-        CCSprite* purplePortal2 = [CCSprite spriteWithFile:@"purplePortal.png"];
-        [self addChild:purplePortal2 z:portalLayerInteger tag:14];
-        CCSprite* yellowPortal2 = [CCSprite spriteWithFile:@"yellowPortal.png"];
-        [self addChild:yellowPortal2 z:portalLayerInteger tag:15];
-        //rescale all at once and set them to invisible. that way we don't
-        //need to worry about their position in the scene
-        for (int i = 6; i< 16; i++) {
-            CCSprite* tempSprite = (CCSprite *) [self getChildByTag:i];
-            tempSprite.scale = tempSprite.scale*portalScaleFactor;
-            tempSprite.visible = false;
-        }
-        
         //add the above pillars in the exact same fashion
-        CCSprite* greenAbovePortal1 = [CCSprite spriteWithFile:@"topGreenPillar.png"];
-        [self addChild:greenAbovePortal1 z:shipLayerInteger tag:16];
-        CCSprite* orangeAbovePortal1 = [CCSprite spriteWithFile:@"topOrangePillar.png"];
-        [self addChild:orangeAbovePortal1 z:shipLayerInteger tag:17];
-        CCSprite* blueAbovePortal1 = [CCSprite spriteWithFile:@"topBluePillar.png"];
-        [self addChild:blueAbovePortal1 z:shipLayerInteger tag:18];
-        CCSprite* purpleAbovePortal1 = [CCSprite spriteWithFile:@"topPurplePillar.png"];
-        [self addChild:purpleAbovePortal1 z:shipLayerInteger tag:19];
-        CCSprite* yellowAbovePortal1 = [CCSprite spriteWithFile:@"topYellowPillar.png"];
-        [self addChild:yellowAbovePortal1 z:shipLayerInteger tag:20];
-        CCSprite* greenAbovePortal2 = [CCSprite spriteWithFile:@"topGreenPillar.png"];
-        [self addChild:greenAbovePortal2 z:shipLayerInteger tag:21];
-        CCSprite* orangeAbovePortal2 = [CCSprite spriteWithFile:@"topOrangePillar.png"];
-        [self addChild:orangeAbovePortal2 z:shipLayerInteger tag:22];
-        CCSprite* blueAbovePortal2 = [CCSprite spriteWithFile:@"topBluePillar.png"];
-        [self addChild:blueAbovePortal2 z:shipLayerInteger tag:23];
-        CCSprite* purpleAbovePortal2 = [CCSprite spriteWithFile:@"topPurplePillar.png"];
-        [self addChild:purpleAbovePortal2 z:shipLayerInteger tag:24];
-        CCSprite* yellowAbovePortal2 = [CCSprite spriteWithFile:@"topYellowPillar.png"];
-        [self addChild:yellowAbovePortal2 z:shipLayerInteger tag:25];
+        CCSprite* greenAbovePortal1 = [CCSprite spriteWithFile:@"greenNeonPillar.png"];
+        [self addChild:greenAbovePortal1 z:shipLayerInteger tag:17];
+        CCSprite* orangeAbovePortal1 = [CCSprite spriteWithFile:@"redNeonPillar.png"];
+        [self addChild:orangeAbovePortal1 z:shipLayerInteger tag:16];
+        CCSprite* blueAbovePortal1 = [CCSprite spriteWithFile:@"blueNeonPillar.png"];
+        [self addChild:blueAbovePortal1 z:shipLayerInteger tag:19];
+        CCSprite* purpleAbovePortal1 = [CCSprite spriteWithFile:@"purpleNeonPillar.png"];
+        [self addChild:purpleAbovePortal1 z:shipLayerInteger tag:20];
+        CCSprite* yellowAbovePortal1 = [CCSprite spriteWithFile:@"yellowNeonPillar.png"];
+        [self addChild:yellowAbovePortal1 z:shipLayerInteger tag:18];
+        CCSprite* greenAbovePortal2 = [CCSprite spriteWithFile:@"greenNeonPillar.png"];
+        [self addChild:greenAbovePortal2 z:shipLayerInteger tag:22];
+        CCSprite* orangeAbovePortal2 = [CCSprite spriteWithFile:@"redNeonPillar.png"];
+        [self addChild:orangeAbovePortal2 z:shipLayerInteger tag:21];
+        CCSprite* blueAbovePortal2 = [CCSprite spriteWithFile:@"blueNeonPillar.png"];
+        [self addChild:blueAbovePortal2 z:shipLayerInteger tag:24];
+        CCSprite* purpleAbovePortal2 = [CCSprite spriteWithFile:@"purpleNeonPillar.png"];
+        [self addChild:purpleAbovePortal2 z:shipLayerInteger tag:25];
+        CCSprite* yellowAbovePortal2 = [CCSprite spriteWithFile:@"yellowNeonPillar.png"];
+        [self addChild:yellowAbovePortal2 z:shipLayerInteger tag:23];
         for (int i = 16; i < 26; i++) {
             CCSprite* tempSprite = (CCSprite *) [self getChildByTag:i];
             tempSprite.scale = tempSprite.scale*pillarScaleFactor;
-            tempSprite.scaleY = 1.2;
+            tempSprite.scaleY = .58;
             tempSprite.visible = false;
         }
         
-        CCSprite* greenBelowPortal1 = [CCSprite spriteWithFile:@"greenPillar.png"];
-        [self addChild:greenBelowPortal1 z:shipLayerInteger tag:26];
-        CCSprite* orangeBelowPortal1 = [CCSprite spriteWithFile:@"orangePillar.png"];
-        [self addChild:orangeBelowPortal1 z:shipLayerInteger tag:27];
-        CCSprite* blueBelowPortal1 = [CCSprite spriteWithFile:@"bluePillar.png"];
-        [self addChild:blueBelowPortal1 z:shipLayerInteger tag:28];
-        CCSprite* purpleBelowPortal1 = [CCSprite spriteWithFile:@"purplePillar.png"];
-        [self addChild:purpleBelowPortal1 z:shipLayerInteger tag:29];
-        CCSprite* yellowBelowPortal1 = [CCSprite spriteWithFile:@"yellowPillar.png"];
-        [self addChild:yellowBelowPortal1 z:shipLayerInteger tag:30];
-        CCSprite* greenBelowPortal2 = [CCSprite spriteWithFile:@"greenPillar.png"];
-        [self addChild:greenBelowPortal2 z:shipLayerInteger tag:31];
-        CCSprite* orangeBelowPortal2 = [CCSprite spriteWithFile:@"orangePillar.png"];
-        [self addChild:orangeBelowPortal2 z:shipLayerInteger tag:32];
-        CCSprite* blueBelowPortal2 = [CCSprite spriteWithFile:@"bluePillar.png"];
-        [self addChild:blueBelowPortal2 z:shipLayerInteger tag:33];
-        CCSprite* purpleBelowPortal2 = [CCSprite spriteWithFile:@"purplePillar.png"];
-        [self addChild:purpleBelowPortal2 z:shipLayerInteger tag:34];
-        CCSprite* yellowBelowPortal2 = [CCSprite spriteWithFile:@"yellowPillar.png"];
-        [self addChild:yellowBelowPortal2 z:shipLayerInteger tag:35];
+        CCSprite* greenBelowPortal1 = [CCSprite spriteWithFile:@"greenNeonPillar.png"];
+        [self addChild:greenBelowPortal1 z:shipLayerInteger tag:27];
+        CCSprite* orangeBelowPortal1 = [CCSprite spriteWithFile:@"redNeonPillar.png"];
+        [self addChild:orangeBelowPortal1 z:shipLayerInteger tag:26];
+        CCSprite* blueBelowPortal1 = [CCSprite spriteWithFile:@"blueNeonPillar.png"];
+        [self addChild:blueBelowPortal1 z:shipLayerInteger tag:29];
+        CCSprite* purpleBelowPortal1 = [CCSprite spriteWithFile:@"purpleNeonPillar.png"];
+        [self addChild:purpleBelowPortal1 z:shipLayerInteger tag:30];
+        CCSprite* yellowBelowPortal1 = [CCSprite spriteWithFile:@"yellowNeonPillar.png"];
+        [self addChild:yellowBelowPortal1 z:shipLayerInteger tag:28];
+        CCSprite* greenBelowPortal2 = [CCSprite spriteWithFile:@"greenNeonPillar.png"];
+        [self addChild:greenBelowPortal2 z:shipLayerInteger tag:32];
+        CCSprite* orangeBelowPortal2 = [CCSprite spriteWithFile:@"redNeonPillar.png"];
+        [self addChild:orangeBelowPortal2 z:shipLayerInteger tag:31];
+        CCSprite* blueBelowPortal2 = [CCSprite spriteWithFile:@"blueNeonPillar.png"];
+        [self addChild:blueBelowPortal2 z:shipLayerInteger tag:34];
+        CCSprite* purpleBelowPortal2 = [CCSprite spriteWithFile:@"purpleNeonPillar.png"];
+        [self addChild:purpleBelowPortal2 z:shipLayerInteger tag:35];
+        CCSprite* yellowBelowPortal2 = [CCSprite spriteWithFile:@"yellowNeonPillar.png"];
+        [self addChild:yellowBelowPortal2 z:shipLayerInteger tag:33];
         for (int i = 26; i < 36; i++) {
             CCSprite* tempSprite = (CCSprite *) [self getChildByTag:i];
             tempSprite.scale = tempSprite.scale*pillarScaleFactor;
-            tempSprite.scaleY = 1.2;
+            tempSprite.scaleY = .58;
             tempSprite.visible = false;
         }
         
-        CGSize screenSize = [CCDirector sharedDirector].winSize;
-        WINDOW_HEIGHT = screenSize.height;
-        WINDOW_WIDTH = screenSize.width;
+//        CGSize screenSize = [CCDirector sharedDirector].winSize;
+//        WINDOW_HEIGHT = screenSize.height;
+//        WINDOW_WIDTH = screenSize.width;
         
-        portalPosition1 = 0;
-        portalPosition2 = WINDOW_WIDTH*.5;
         
-        CCSprite* buttons = [CCSprite spriteWithFile:@"buttons.png"];
+//        scoreInt = 0;
+//        NSString* scoreString = [NSString stringWithFormat:@"%d", scoreInt];
+//        score = [CCLabelTTF labelWithString:scoreString fontName:@"AppleGothic" fontSize:24];
+//        //score.color = ccCYAN;
+//        score.color = ccRED;
+//        score.anchorPoint = CGPointMake(0, 0);
+//        score.position = CGPointMake(5,5);
+//        [self addChild:score z:8 tag:99];
+        
+        
+
+        
+        portalPosition1 = WINDOW_WIDTH;
+        portalPosition2 = WINDOW_WIDTH*1.5;
+        
+        CCSprite* buttons = [CCSprite spriteWithFile:@"NeonButtons.png"];
         buttons.position = CGPointMake(WINDOW_WIDTH*5/6+ 45, WINDOW_HEIGHT*.5);
         buttons.scaleY = buttons.scaleY*.66;
         [self addChild:buttons z:shipLayerInteger +1];
@@ -493,10 +518,18 @@ float r,g,b;
         triCentY = WINDOW_HEIGHT/2;
         
         [KKInput sharedInput].multipleTouchEnabled = YES;
-       
+        
+        portalHeight1 = arc4random() % (WINDOW_HEIGHT*2/3)+(WINDOW_HEIGHT/6);
+        portalHeight2 = arc4random() % (WINDOW_HEIGHT*2/3)+(WINDOW_HEIGHT/6);
+        
         [self createGradient];
         [self scheduleUpdate];
         [self shipSwitch:currentShipTag + 1];
+        [self portalOneSpriteChange:((arc4random()%5)+6)];
+        [self portalTwoSpriteChange:((arc4random()%5)+11)];
+        [self repositionPortal1];
+        [self repositionPortal2];
+        
     }
     
     return self;
@@ -553,8 +586,8 @@ float r,g,b;
 }
 
 
--(void) draw
-{
+//-(void) draw
+//{
 //    glClearColor(red, blue, green, alpha);
 //    
 //    //ccDrawSolidRect(ccp(portalPosition1-32, 0), ccp(portalPosition1, WINDOW_HEIGHT), ccc4f(white, white, white, 1));
@@ -576,7 +609,7 @@ float r,g,b;
     
 
     
-}
+//}
 
 
 @end
