@@ -19,6 +19,9 @@
     CCSprite* topPillar2;
     CCSprite* bottomPillar2;
     
+    CCLabelTTF* score;
+    
+    CCSprite* visibleShip;
     
     CCSprite* purpleTri;
     CCSprite* blueTri;

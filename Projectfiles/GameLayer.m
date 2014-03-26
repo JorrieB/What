@@ -5,6 +5,7 @@
 //  Created by Jorrie Brettin on 2/27/14.
 //
 //
+#import "StartMenu.h"
 #import "GameLayer.h"
 #import "SimpleAudioEngine.h"
 #import "HeyaldaGLDrawNode.h"
@@ -30,7 +31,7 @@ int score = 0; //unimplemented score counter
 //float red = 1.0, blue = 1.0, green = 1.0, alpha = 1.0;
 //float bb0, bb1, bb2, bb3, bb4, gb0, gb1, gb2, gb3, gb4, rb0, rb1, rb2, rb3, rb4, ab0, ab1, ab2, ab3, ab4;//randomization variables for the button colors
 int pinkPortal, bluePortal, currentTouch; //keeps track of whether the background is properly set or not
-float portalSpeed = 4;
+float portalSpeed;
 CGPoint* triCenter;
 int triCentX,triCentY;
 float shipScaleFactor = .2;
@@ -41,12 +42,13 @@ int radius = 20;
 float smoothTwist;
 int shipLayerInteger = 5;
 int portalLayerInteger = 4;
-int currentShipTag = 3;
+int currentShipTag = 2;
 float shipRotation = 0;
 int colorPortal1, colorPortal2;
 int scoreInt;
-float beatCounter = .030555555555555*2*M_PI;;
+float beatCounter = .030555555555555*2*M_PI;
 double pulseCounter = 0;
+double speedIncreaser;// = 90./256.*1./60.;
 
 float r,g,b;
 
@@ -79,9 +81,18 @@ float r,g,b;
 - (void) update:(ccTime)dt
 {
     
-    visibleShip.scale = visibleShip.scale + .1*sin(pulseCounter);
-    pulseCounter += beatCounter;
+    visibleShip.scale = visibleShip.scale + .003*sin(pulseCounter);
     
+    CCSprite* spriteScaler;
+    for (int i = 1; i < 6; i++) {
+        spriteScaler = (CCSprite *) [self getChildByTag:i];
+        spriteScaler.scale = visibleShip.scale + .003*sin(pulseCounter);
+    }
+    
+    speedIncreaser += 190./(90.*60.);
+    portalSpeed = 1+ log2(speedIncreaser);
+    
+    pulseCounter += beatCounter;
     //KKTouch* touch = [KKTouch ]
     KKInput* input = [KKInput sharedInput];
     //KKInput* leftTouch = [KKInput ]
@@ -221,7 +232,7 @@ float r,g,b;
 //        alpha = (rand() % 10) * .1;
 //        }
     
-
+//
     [self collisionDetection];
 }
 
@@ -306,7 +317,7 @@ float r,g,b;
                 CCSprite* tempSprite = (CCSprite *) [self getChildByTag:i];
                 [self spriteRepositionOnColor: i];
                 tempSprite.visible = true;
-//                visibleShip = tempSprite;
+                visibleShip = tempSprite;
             } else {
                 CCSprite *tempSprite = (CCSprite *) [self getChildByTag:i];
                 tempSprite.visible = false;
@@ -329,7 +340,7 @@ float r,g,b;
         if (triCentY > portalHeight1 +portalSize || triCentY < portalHeight1 - portalSize - 5) {
             collisionHappened = true;
         } else if (!(currentShipTag%5 == colorPortal1)) {
-            collisionHappened = true;
+//            collisionHappened = true;
         }
     }
     
@@ -337,7 +348,7 @@ float r,g,b;
         if (triCentY > portalHeight2 +portalSize || triCentY < portalHeight2 - portalSize - 5) {
             collisionHappened = true;
         } else if (!(currentShipTag % 5 == colorPortal2)) {
-            collisionHappened = true;
+//            collisionHappened = true;
         }
     }
     
@@ -358,25 +369,49 @@ float r,g,b;
 //    [self portalTwoSpriteChange:((arc4random()%5)+11)];
 //    [self repositionPortal1];
 //    [self repositionPortal2];
-//    collisionHappened = false;
+    
 //    score = 0;
     [self unscheduleUpdate];
+    currentShipTag = 2;
+    
+    
+    [[SimpleAudioEngine sharedEngine] stopBackgroundMusic];
+    [[SimpleAudioEngine sharedEngine] playEffect:@"downedShip.wav"];
     
     id move1 = [CCMoveBy actionWithDuration:2.0f position:CGPointMake(100,0)];
     id move2 = [CCMoveBy actionWithDuration:2.0f position:CGPointMake(100,0)];
     id move3 = [CCMoveBy actionWithDuration:2.0f position:CGPointMake(100,0)];
     id move4 = [CCMoveBy actionWithDuration:2.0f position:CGPointMake(100,0)];
-    //[bottomPillar1 runAction:move1];
+    [bottomPillar1 runAction:move1];
     [bottomPillar2 runAction:move2];
     [topPillar1 runAction:move3];
     [topPillar2 runAction:move4];
     id shipRotate = [CCRotateBy actionWithDuration:2.0f angle:-500];
-    id shipFall = [CCMoveBy actionWithDuration:2.0f position:CGPointMake(0, -100)];
-    id shipGravityFall = [CCAccelAmplitude actionWithAction:move1 duration:2.0f];
-    [bottomPillar1 runAction:shipRotate];
+    [visibleShip runAction:shipRotate];
+    id shipFade = [CCFadeOut actionWithDuration:2.0f];
+    [visibleShip runAction:shipFade];
+    
+    [self schedule:@selector(sceneTransitionDelay:) interval:1.0f];
+    
+//    CCScene* transition = [CCTransitionFade transitionWithDuration:1.0f scene:[StartMenu scene]];
+//    [[CCDirector sharedDirector] replaceScene:transition];
+//    [[CCDirector sharedDirector] replaceScene:
+//	 [CCTransitionFade transitionWithDuration:2.0f scene:[StartMenu scene]]];
+    
+
+    
+//    id shipFall = [CCMoveBy actionWithDuration:2.0f position:CGPointMake(0, -100)];
+//    id shipGravityFall = [CCAccelAmplitude actionWithAction:move1 duration:2.0f];
 //    [[SimpleAudioEngine sharedEngine] playEffect:@"electronicFunky.mp3"];
     //[[SimpleAudioEngine sharedEngine] playEffect:@"explo2.wav"];
     
+}
+
+-(void) sceneTransitionDelay:(ccTime) delta
+{
+    [[CCDirector sharedDirector] replaceScene:
+	 [CCTransitionFade transitionWithDuration:2.0f scene:[StartMenu scene]]];
+    [self unschedule:@selector(sceneTransitionDelay:)];
 }
 
 
@@ -386,9 +421,10 @@ float r,g,b;
     if ((self = [super init])) {
         
         
+        collisionHappened = false;
+
         
-        
-        [[SimpleAudioEngine sharedEngine] preloadEffect:@"explo2.wav"];
+        [[SimpleAudioEngine sharedEngine] preloadEffect:@"downedShip.wav"];
         [[SimpleAudioEngine sharedEngine] playBackgroundMusic:@"electronicFunky.mp3" loop:true];
         
         //glClearColor(red, blue, green, alpha);
@@ -430,7 +466,7 @@ float r,g,b;
         [self addChild:greenTri z:shipLayerInteger tag:1];
         for (int i =1; i < 6; i++) {
             CCSprite* tempSprite = (CCSprite *) [self getChildByTag:i];
-            tempSprite.scale = tempSprite.scale*shipScaleFactor;
+            tempSprite.scale = shipScaleFactor;//tempSprite.scale*
         }
         
         //add the above pillars in the exact same fashion
@@ -488,22 +524,23 @@ float r,g,b;
             tempSprite.visible = false;
         }
         
-//        CGSize screenSize = [CCDirector sharedDirector].winSize;
-//        WINDOW_HEIGHT = screenSize.height;
-//        WINDOW_WIDTH = screenSize.width;
+        CGSize screenSize = [CCDirector sharedDirector].winSize;
+        WINDOW_HEIGHT = screenSize.height;
+        WINDOW_WIDTH = screenSize.width;
+        
+        pulseCounter = 0;
+        scoreInt = 0;
+        speedIncreaser = 0;
+        
+        NSString* scoreString = [NSString stringWithFormat:@"%d", scoreInt];
+        score = [CCLabelTTF labelWithString:scoreString fontName:@"AndroidNationBold" fontSize:24];
+        //score.color = ccCYAN;
+        score.color = ccWHITE;
+        score.anchorPoint = CGPointMake(1, 0);
+        score.position = CGPointMake(WINDOW_WIDTH*5/6 - 5,0);
+        [self addChild:score z:0 tag:99];
         
         
-//        scoreInt = 0;
-//        NSString* scoreString = [NSString stringWithFormat:@"%d", scoreInt];
-//        score = [CCLabelTTF labelWithString:scoreString fontName:@"AppleGothic" fontSize:24];
-//        //score.color = ccCYAN;
-//        score.color = ccRED;
-//        score.anchorPoint = CGPointMake(0, 0);
-//        score.position = CGPointMake(5,5);
-//        [self addChild:score z:8 tag:99];
-        
-        
-
         
         portalPosition1 = WINDOW_WIDTH;
         portalPosition2 = WINDOW_WIDTH*1.5;
@@ -524,7 +561,7 @@ float r,g,b;
         
         [self createGradient];
         [self scheduleUpdate];
-        [self shipSwitch:currentShipTag + 1];
+        [self shipSwitch:currentShipTag+1];
         [self portalOneSpriteChange:((arc4random()%5)+6)];
         [self portalTwoSpriteChange:((arc4random()%5)+11)];
         [self repositionPortal1];
